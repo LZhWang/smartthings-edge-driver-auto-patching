@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+title: "Edge Driver Auto Patching Tool"
+authors:
+  - family-names: Xu
+    given-names: Xuening
+    affiliation: Stevens Institute of Technology
+  - family-names: Fu
+    given-names: Chenglong
+    affiliation: University of North Carolina at Charlotte
+  - family-names: Du
+    given-names: Xiaojiang
+    affiliation: Stevens Institute of Technology
+  - family-names: Luo
+    given-names: Bo
+    affiliation: University of Kansas
+preferred-citation:
+  type: conference-paper
+  title: "Discovering and Exploiting IoT Device Hidden Attributes: A New Vulnerability in Smart Homes"
+  authors:
+    - family-names: Xu
+      given-names: Xuening
+    - family-names: Fu
+      given-names: Chenglong
+    - family-names: Du
+      given-names: Xiaojiang
+    - family-names: Luo
+      given-names: Bo
+  conference:
+    name: "ACM Conference on Computer and Communications Security (CCS)"
+    date-start: 2025-11-10
+    date-end: 2025-11-14
+  year: 2025
+  month: 11
+  url: https://doi.org/placeholder
+message: |
+  If you use this software, please cite our CCS 2025 paper:
+  "Discovering and Exploiting IoT Device Hidden Attributes: A New Vulnerability in Smart Homes."

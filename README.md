@@ -28,6 +28,12 @@ subdriver so you can immediately install the modified driver on your hub.
 - Linux, macOS, or Windows with Git Bash/WSL
 - SmartThings Edge driver source placed next to the tool (see layout below)
 
+### Prefer Containers?
+
+A ready-to-use Docker image is provided for contributors who would rather not
+install Python/Make locally. See [Containerized Development](#containerized-development)
+for details.
+
 Install both runtime and dev dependencies with:
 
 ```bash
@@ -84,6 +90,41 @@ Nothing is written to disk; you simply see the steps that would run.
    - Adds the manufacturer/model to `PATCHED_DEVICE_MODELS`
    - Injects the new subdriver into the parent driver’s `sub_drivers` table
 
+## Driver Discovery Pipeline
+
+Use the discovery CLI to scan either the public SmartThings Edge repository
+directly from GitHub or any local clone that contains official drivers. The
+tool aggregates every `fingerprints.yml`, summarizes the devices they target,
+and highlights drivers that still lack capability mappings in
+`custom_capability_list.config`.
+
+Discover via GitHub (requires internet; optional `GITHUB_TOKEN` for higher
+rate limits):
+
+```bash
+python -m discovery.discover_drivers \
+  --source github \
+  --repo SmartThingsCommunity/edge-drivers \
+  --branch main \
+  --output discovery/catalog.json
+```
+
+Work offline against a local clone (or any folder that holds driver
+directories with `fingerprints.yml`):
+
+```bash
+python -m discovery.discover_drivers \
+  --source local \
+  --local-dir ~/edge-drivers \
+  --driver-subpath drivers \
+  --output discovery/catalog-local.yaml \
+  --format yaml
+```
+
+`unsupported_drivers` in the generated report flags candidates that have no
+entry in `custom_capability_list.config`, making it easy to decide which
+drivers should be patched next.
+
 ## Repository Layout
 
 ```
@@ -124,6 +165,33 @@ make test
 
 GitHub Actions (`.github/workflows/ci.yml`) runs the exact commands on every PR
 and on the `main`/`master` branches.
+
+## Containerized Development
+
+Build the reusable image (installs all dev dependencies):
+
+```bash
+make docker-build
+```
+
+Drop into a shell with the repo bind-mounted, ready to run scripts:
+
+```bash
+make docker-shell
+# inside container
+make test
+```
+
+Or execute the QA suite headlessly:
+
+```bash
+make docker-test
+```
+
+You can also use `docker compose run --rm dev bash` directly if you prefer the
+Compose workflow. The container automatically honors `GITHUB_TOKEN`, making it
+easy to run the discovery pipeline against the public SmartThings repos without
+throttling.
 
 ## Find Device Model and Manufacturer
 

@@ -1,6 +1,7 @@
 # EdgeLoom
 
 [![CI](https://github.com/edgeloom-oss/edgeloom/actions/workflows/ci.yml/badge.svg)](https://github.com/edgeloom-oss/edgeloom/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/edgeloom.svg)](https://pypi.org/project/edgeloom/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
 

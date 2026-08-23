@@ -18,11 +18,17 @@ drivers.
 
 ## Development Workflow
 
-- **Linting:** `make lint`
-- **Formatting:** `make format`
+- **Linting:** `make lint` (`ruff check .`)
+- **Formatting:** `make format`, and `make format-check` to verify
 - **Tests:** `make test`
+- **Schema validation:** `make validate`
 
-Please ensure all commands pass before opening a pull request.
+`make check` runs all four, which is exactly what CI enforces. Please make sure
+it passes before opening a pull request.
+
+CI additionally runs the suite on Python 3.11 and 3.12, lints
+`auto_patch/auto_patch.sh` with shellcheck, and verifies the built wheel
+installs into a clean environment.
 
 ## Adding Support for a New Driver
 

@@ -1,1 +1,4 @@
--r auto_patch/requirements.txt
+# Runtime dependencies are declared in pyproject.toml, which is the single
+# source of truth. This file is kept so `pip install -r requirements.txt`
+# keeps working for anyone who already scripted against it.
+-e .

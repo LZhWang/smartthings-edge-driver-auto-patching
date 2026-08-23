@@ -1,5 +1,22 @@
 cff-version: 1.2.0
-title: "Edge Driver Auto Patching Tool"
+title: "EdgeLoom"
+abstract: >-
+  An open toolchain for validating, patching, and translating smart-home edge
+  drivers across platforms.
+type: software
+version: 0.1.0
+date-released: 2026-08-23
+license: Apache-2.0
+repository-code: https://github.com/edgeloom-oss/edgeloom
+url: https://github.com/edgeloom-oss/edgeloom
+keywords:
+  - smart home
+  - internet of things
+  - SmartThings
+  - Home Assistant
+  - Zigbee
+  - edge drivers
+  - security
 authors:
   - family-names: Xu
     given-names: Xuening
@@ -13,6 +30,8 @@ authors:
   - family-names: Luo
     given-names: Bo
     affiliation: University of Kansas
+  - family-names: Wu
+    given-names: Chuxiong
 preferred-citation:
   type: conference-paper
   title: "Discovering and Exploiting IoT Device Hidden Attributes: A New Vulnerability in Smart Homes"
@@ -25,13 +44,13 @@ preferred-citation:
       given-names: Xiaojiang
     - family-names: Luo
       given-names: Bo
+  collection-title: "Proceedings of the ACM Conference on Computer and Communications Security (CCS)"
   conference:
     name: "ACM Conference on Computer and Communications Security (CCS)"
     date-start: 2025-11-10
     date-end: 2025-11-14
   year: 2025
   month: 11
-  url: https://doi.org/placeholder
 message: |
   If you use this software, please cite our CCS 2025 paper:
   "Discovering and Exploiting IoT Device Hidden Attributes: A New Vulnerability in Smart Homes."

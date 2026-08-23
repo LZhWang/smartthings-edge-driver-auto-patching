@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a reproducible problem with the Edge Driver Auto Patching Tool
+about: Report a reproducible problem with EdgeLoom
 title: "[Bug] "
 labels: bug
 assignees: ''
@@ -28,10 +28,15 @@ assignees: ''
 
 ## Environment
 
+- EdgeLoom version (`edgeloom --version`) or commit:
+- Command (`patch` / `translate` / `discover` / `validate`):
 - OS:
 - Python version:
-- Driver being patched:
+- Driver or HA domain involved:
 
 ## Additional Context
 
 <!-- Links, screenshots, or anything else that gives more context. -->
+
+<!-- Reporting behaviour against a specific device? The Device report template
+     collects the right details. Never paste access tokens or hub credentials. -->

@@ -1,0 +1,112 @@
+name: Device report
+description: Tell us how EdgeLoom behaved against a real device
+title: "[Device] <manufacturer> <model>"
+labels: ["device-report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Device reports are the most useful thing you can contribute. They tell us
+        which hardware actually works, and they are how the supported-driver table
+        grows. Reports of **failures are just as valuable as successes** — please
+        file either.
+
+        Model and manufacturer strings must match the device exactly. Find them in
+        the [SmartThings web app](https://my.smartthings.com) under **Advanced Users**.
+
+        Please do not paste access tokens, `ha_devices.yaml`, or hub credentials.
+
+  - type: input
+    id: manufacturer
+    attributes:
+      label: Manufacturer
+      description: Exactly as the platform reports it.
+      placeholder: Yale
+    validations:
+      required: true
+
+  - type: input
+    id: model
+    attributes:
+      label: Device model
+      description: Exactly as the platform reports it.
+      placeholder: YRD226 TSDB
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - SmartThings
+        - Home Assistant
+        - Both
+    validations:
+      required: true
+
+  - type: input
+    id: driver
+    attributes:
+      label: Driver
+      description: The driver directory you patched, or the HA domain you translated.
+      placeholder: zigbee-lock
+    validations:
+      required: true
+
+  - type: input
+    id: attributes
+    attributes:
+      label: Attributes attempted
+      description: The colon-separated list you passed, or ALL.
+      placeholder: Language:AutoRelockTime
+
+  - type: dropdown
+    id: result
+    attributes:
+      label: Result
+      options:
+        - Worked — all requested attributes appeared
+        - Partly worked — some attributes appeared
+        - Patched cleanly, but nothing appeared on the hub
+        - Failed — the command errored
+        - Device was not recognised at all
+    validations:
+      required: true
+
+  - type: textarea
+    id: detail
+    attributes:
+      label: What happened
+      description: What you expected, and what you got instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Command and output
+      description: The command you ran and its output. Re-run with `-v` if you can.
+      render: shell
+
+  - type: input
+    id: version
+    attributes:
+      label: EdgeLoom version
+      description: Output of `edgeloom --version`, or the commit SHA.
+      placeholder: edgeloom 0.1.0
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: OS and Python version
+      placeholder: macOS 15.5, Python 3.11.9
+
+  - type: checkboxes
+    id: credit
+    attributes:
+      label: Attribution
+      options:
+        - label: You may credit me in the supported-device table and release notes.

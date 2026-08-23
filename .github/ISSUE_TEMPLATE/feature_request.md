@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea or improvement for the Edge Driver Auto Patching Tool
+about: Suggest an idea or improvement for EdgeLoom
 title: "[Feature] "
 labels: enhancement
 assignees: ''

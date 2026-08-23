@@ -197,3 +197,31 @@ def test_repo_document_census_recognizes_only_schema_artifacts(repo_root: Path) 
     }
 
     assert recognized == expected
+
+
+def test_iter_documents_skips_hidden_and_vendored_directories(tmp_path: Path) -> None:
+    """A .venv in the tree must not turn third-party files into findings.
+
+    pip ships CycloneDX SBOMs under .dist-info/sboms/ whose top-level
+    "components" is a list, which detect_kind would otherwise read as a device
+    profile and report as invalid.
+    """
+    _write(tmp_path / "real.yaml", VALID_PROFILE)
+
+    sbom = tmp_path / ".venv" / "lib" / "site-packages" / "ruff.dist-info" / "sboms"
+    sbom.mkdir(parents=True)
+    _write(sbom / "ruff.cyclonedx.json", {"bomFormat": "CycloneDX", "components": [{"type": "library"}]})
+    for vendored in ("node_modules", "build", "dist"):
+        (tmp_path / vendored).mkdir()
+        _write(tmp_path / vendored / "stray.yaml", VALID_PROFILE)
+
+    assert schemas.iter_documents([tmp_path]) == [tmp_path / "real.yaml"]
+
+
+def test_explicitly_named_vendored_file_is_still_honoured(tmp_path: Path) -> None:
+    """Pruning applies to the recursive walk, not to a path the user named."""
+    hidden = tmp_path / ".venv"
+    hidden.mkdir()
+    target = _write(hidden / "profile.yaml", VALID_PROFILE)
+
+    assert schemas.iter_documents([target]) == [target]

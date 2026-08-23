@@ -55,6 +55,18 @@ def test_unknown_schema_kind_is_rejected() -> None:
     [
         (VALID_PROFILE, schemas.PROFILE),
         (VALID_MAP, schemas.CAPABILITY_MAP),
+        ({"components": []}, schemas.PROFILE),
+        ({"drivers": {}}, schemas.CAPABILITY_MAP),
+        (
+            {
+                "generated_at": "2026-08-23T00:00:00+00:00",
+                "source": "local",
+                "stats": {},
+                "unsupported_drivers": [],
+                "drivers": [],
+            },
+            None,
+        ),
         ({"unrelated": True}, None),
         ("not a mapping", None),
         (None, None),
@@ -62,6 +74,23 @@ def test_unknown_schema_kind_is_rejected() -> None:
 )
 def test_detect_kind(document: object, expected: str | None) -> None:
     assert schemas.detect_kind(document) == expected
+
+
+@pytest.mark.parametrize(
+    "payload,expected_kind,missing_key",
+    [
+        ({"components": []}, schemas.PROFILE, "name"),
+        ({"drivers": {}}, schemas.CAPABILITY_MAP, "version"),
+    ],
+)
+def test_missing_required_identity_key_fails_validation(
+    tmp_path: Path, payload: dict, expected_kind: str, missing_key: str
+) -> None:
+    result = schemas.validate_document(_write(tmp_path / "invalid.yaml", payload))
+
+    assert result.kind == expected_kind
+    assert not result.ok
+    assert any(missing_key in message for message in result.errors)
 
 
 def test_valid_profile_passes(tmp_path: Path) -> None:
@@ -145,3 +174,26 @@ def test_every_shipped_profile_conforms(repo_root: Path) -> None:
     results = [schemas.validate_document(p) for p in schemas.iter_documents(targets)]
     assert results, "expected profiles to validate"
     assert all(r.ok for r in results), [r.errors for r in results if not r.ok]
+
+
+def test_repo_document_census_recognizes_only_schema_artifacts(repo_root: Path) -> None:
+    """Repository-wide inference must find every schema artifact and skip support YAML."""
+    expected = {
+        Path("auto_patch/capability-map.yaml"),
+        Path("auto_patch/zigbee-lock/profiles/base-lock.yml"),
+        Path("auto_patch/zigbee-lock/profiles/lock-battery.yml"),
+        Path("auto_patch/zigbee-lock/profiles/lock-without-codes.yml"),
+        Path("translator/ha_proxy_edge_driver/profiles/ha_contact_sensor.yaml"),
+        Path("translator/ha_proxy_edge_driver/profiles/ha_light_color.yaml"),
+        Path("translator/ha_proxy_edge_driver/profiles/ha_light_dimmable.yaml"),
+        Path("translator/ha_proxy_edge_driver/profiles/ha_lock_basic.yaml"),
+        Path("translator/ha_proxy_edge_driver/profiles/ha_motion_sensor.yaml"),
+        Path("translator/ha_proxy_edge_driver/profiles/ha_switch_basic.yaml"),
+    }
+    recognized = {
+        result.path.relative_to(repo_root)
+        for result in (schemas.validate_document(path) for path in schemas.iter_documents([repo_root]))
+        if not result.skipped
+    }
+
+    assert recognized == expected

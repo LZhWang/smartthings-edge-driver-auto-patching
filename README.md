@@ -1,322 +1,169 @@
-# Edge Driver Auto Patching Tool
+# EdgeLoom
 
-Automation to retrofit SmartThings Edge drivers with Zigbee attributes that are
-missing from the stock distributions. The tool keeps the original driver safe,
-generates a patched profile, injects handler logic, and wires-in a companion
-subdriver so you can immediately install the modified driver on your hub.
+[![CI](https://github.com/edgeloom-oss/edgeloom/actions/workflows/ci.yml/badge.svg)](https://github.com/edgeloom-oss/edgeloom/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
 
-> This project accompanies the CCS 2025 paper **"Discovering and Exploiting IoT
-> Device Hidden Attributes: A New Vulnerability in Smart Homes"**  
-> Xuening Xu (Stevens Institute of Technology), Chenglong Fu (University of
-> North Carolina at Charlotte), Xiaojiang Du (Stevens Institute of Technology),
-> Bo Luo (University of Kansas). Please cite the paper if this code
-> contributes to your research (see [How to Cite](#how-to-cite)).
+**An open toolchain for validating, patching, and translating smart-home edge
+drivers across platforms.**
 
-## Highlights
+Smart-home hubs decide what a device is allowed to be. A lock that reports nine
+configurable attributes over Zigbee may surface two of them, because the stock
+driver's *profile* — the declared set of capabilities — never mentions the rest.
+The device is not the limit; the driver is. EdgeLoom is the toolchain for
+inspecting, rewriting, and checking those drivers.
 
-- **Safety first** – automatic backups plus an optional `--dry-run` mode.
-- **Deterministic workflow** – three Python steps invoked by one shell script.
-- **Config driven** – capability IDs and handler/subdriver mappings live in
-  simple INI files.
-- **Tested & linted** – Pytest coverage for all core patchers and a GitHub
-  Actions workflow to keep contributions healthy.
+The three tools do different jobs, but they all produce or consume the same
+artifact: a device profile. EdgeLoom's position is that this artifact should be
+a **checked contract** rather than a file each tool invents privately. So the
+schema sits at the centre, and `edgeloom validate` is the gate everything passes
+through.
 
-## Requirements
+```mermaid
+flowchart TD
+    subgraph inputs [Inputs]
+        A["Stock SmartThings<br/>Edge driver"]
+        B["Home Assistant<br/>instance"]
+        C["Driver catalog<br/>(GitHub or local)"]
+    end
 
-- Python 3.10+
-- `pip` and (optionally) `make`
-- Linux, macOS, or Windows with Git Bash/WSL
-- SmartThings Edge driver source placed next to the tool (see layout below)
+    A --> P["edgeloom patch<br/><i>expose hidden attributes</i>"]
+    B --> T["edgeloom translate<br/><i>project HA entities onto Edge</i>"]
+    C --> D["edgeloom discover<br/><i>enumerate drivers + fingerprints</i>"]
 
-### Prefer Containers?
+    P --> S
+    T --> S
+    D -.->|"flags drivers with<br/>no mapping"| S
 
-A ready-to-use Docker image is provided for contributors who would rather not
-install Python/Make locally. See [Containerized Development](#containerized-development)
-for details.
+    S{{"schema/ v0.1<br/><b>profile · capability-map</b>"}}
 
-Install both runtime and dev dependencies with:
+    S --> V["edgeloom validate<br/><i>assurance gate, CI-ready</i>"]
+    V --> O["Hub-installable driver<br/>with a checked profile"]
+```
+
+Because both paths converge on one schema, a profile rewritten by the patcher
+and a profile emitted by the translator are checked against identical rules —
+which is what makes `validate` an assurance layer and not just a linter.
+
+## Install
 
 ```bash
-make install
-# or
-pip install -r requirements-dev.txt
+pip install edgeloom
 ```
 
-## Quickstart
-
-1. Clone this repository and `cd` into it.
-2. Copy the Edge driver you want to patch inside the `auto_patch/` directory.
-3. Run the patcher:
-
-   ```bash
-   cd auto_patch
-   ./auto_patch.sh zigbee-lock "YRD226 TSDB" Yale ALL
-   ```
-
-4. The patched driver replaces the original folder, while a
-   `zigbee-lock-backup` directory preserves the stock bits.
-
-Use `--dry-run` when trying a new driver or attribute list:
+From a checkout:
 
 ```bash
-./auto_patch.sh --dry-run zigbee-lock "YRD226 TSDB" Yale Language
+git clone https://github.com/edgeloom-oss/edgeloom.git
+cd edgeloom
+pip install -e ".[dev]"
 ```
 
-Nothing is written to disk; you simply see the steps that would run.
+Requires Python 3.11 or newer.
 
-## Usage Details
-
-```
-./auto_patch.sh [-n|--dry-run] [-v|--verbose] DriverName DeviceModel Manufacturer AttributeList
-```
-
-- `DriverName`: folder name under `auto_patch/` for the driver to patch.
-- `DeviceModel`: model string from SmartThings Advanced Web App.
-- `Manufacturer`: manufacturer string from the same page.
-- `AttributeList`: colon (`:`) separated list (e.g. `Language:AutoRelockTime`)
-  or `ALL`.
-
-### Workflow Overview
-
-1. **Profiles & fingerprints** – `patch_profiles.py`
-   - Backs up `fingerprints.yml`
-   - Points the requested model at a new `*-patch` profile
-   - Clones the original profile and appends the desired capabilities
-2. **Capability handlers** – `patch_handlers.py`
-   - Copies the appropriate Lua handler from `cap-patches/`
-   - Skips copies when you rerun the script
-3. **Subdriver wiring** – `patch_subdriver.py`
-   - Copies a subdriver template from `subdrivers/`
-   - Adds the manufacturer/model to `PATCHED_DEVICE_MODELS`
-   - Injects the new subdriver into the parent driver’s `sub_drivers` table
-
-## Restoring to Stock Drivers
-
-Every patch run preserves the original driver under `auto_patch/<driver>-backup`
-(for example `zigbee-lock-backup`). Use the restore helper to undo a patch and
-bring the stock driver back:
+## Commands
 
 ```
-cd auto_patch
-python restore_from_backup.py --driver zigbee-lock
+edgeloom patch      DRIVER MODEL MANUFACTURER [ATTRIBUTES]  Expose hidden device attributes
+edgeloom translate  --ha-url URL --output DIR               Bridge Home Assistant to SmartThings
+edgeloom discover   [--source github|local]                 Enumerate drivers and fingerprints
+edgeloom validate   [PATHS...]                              Check artifacts against the schema
 ```
 
-`--dry-run` logs the moves without changing the filesystem, and `--verbose`
-enables debug output. The script parks the patched driver in a timestamped
-folder like `zigbee-lock-patched-YYYYMMDD-HHMMSS` and moves the backup back to
-`zigbee-lock`.
-
-## Driver Discovery Pipeline
-
-Use the discovery CLI to scan either the public SmartThings Edge repository
-directly from GitHub or any local clone that contains official drivers. The
-tool aggregates every `fingerprints.yml`, summarizes the devices they target,
-and highlights drivers that still lack capability mappings in
-`custom_capability_list.config`.
-
-Discover via GitHub (requires internet; optional `GITHUB_TOKEN` for higher
-rate limits):
+Patch a Zigbee lock so its language and auto-relock settings become visible,
+previewing first:
 
 ```bash
-python -m discovery.discover_drivers \
-  --source github \
-  --repo SmartThingsCommunity/edge-drivers \
-  --branch main \
-  --output discovery/catalog.json
+edgeloom patch auto_patch/zigbee-lock "YRD226 TSDB" Yale Language:AutoRelockTime --dry-run
+edgeloom patch auto_patch/zigbee-lock "YRD226 TSDB" Yale Language:AutoRelockTime
 ```
 
-Work offline against a local clone (or any folder that holds driver
-directories with `fingerprints.yml`):
+The original driver is copied to `<driver>-backup` before anything is written,
+and restored automatically if any step fails.
+
+Generate SmartThings Edge proxy artifacts for your Home Assistant entities:
 
 ```bash
-python -m discovery.discover_drivers \
-  --source local \
-  --local-dir ~/edge-drivers \
-  --driver-subpath drivers \
-  --output discovery/catalog-local.yaml \
-  --format yaml
+export HA_TOKEN=...   # a long-lived access token
+edgeloom translate --ha-url http://homeassistant.local:8123 --output ./generated_edge
 ```
 
-`unsupported_drivers` in the generated report flags candidates that have no
-entry in `custom_capability_list.config`, making it easy to decide which
-drivers should be patched next.
-
-## Repository Layout
-
-```
-.
-├── Makefile
-├── requirements.txt
-├── requirements-dev.txt
-├── auto_patch
-│   ├── auto_patch.sh
-│   ├── patch_profiles.py
-│   ├── patch_handlers.py
-│   ├── patch_subdriver.py
-│   ├── custom_capability_list.config
-│   ├── driver2patch.config
-│   ├── cap-patches/
-│   ├── subdrivers/
-│   └── zigbee-lock/         <-- Sample SmartThings Edge driver
-├── tests/
-├── .github/
-└── assets/
-```
-
-## Configuration Files
-
-- `custom_capability_list.config` – maps human-friendly attribute names to
-  custom capability IDs. Extend this file when a driver learns new attributes.
-- `driver2patch.config` – links drivers to their handler file name and
-  subdriver directory. Add entries here when supporting new drivers.
-
-## Testing & Validation
-
-Run quality checks locally with:
+Check every profile and capability map in a tree:
 
 ```bash
-make lint
-make test
+edgeloom validate .
 ```
 
-GitHub Actions (`.github/workflows/ci.yml`) runs the exact commands on every PR
-and on the `main`/`master` branches.
+`validate` exits non-zero when a document violates the schema, and also when it
+finds nothing to check — a silent pass over zero files would otherwise read as
+success.
 
-## Containerized Development
+## Components
 
-Build the reusable image (installs all dev dependencies):
+| Path | Component | Command | Documentation |
+| --- | --- | --- | --- |
+| `auto_patch/` | Edge driver patcher | `edgeloom patch` | [docs/patching.md](docs/patching.md) |
+| `translator/` | Home Assistant bridge | `edgeloom translate` | [translator/README.md](translator/README.md) |
+| `discovery/` | Driver catalog scanner | `edgeloom discover` | [docs/discovery.md](docs/discovery.md) |
+| `schema/` | Published contracts | `edgeloom validate` | [schema/](schema/) |
+
+The translator began life as
+[HA2ST-Translator](https://github.com/edgeloom-oss/HA2ST-Translator), written by
+Chuxiong Wu, and was merged here with its history intact. That repository is now
+archived and redirects to this one.
+
+## Schema
+
+Version 0.1 publishes two JSON Schemas (draft 2020-12):
+
+- **[`schema/profile.schema.json`](schema/profile.schema.json)** — a device
+  profile: the capabilities a driver exposes for one device, and the categories
+  describing it.
+- **[`schema/capability-map.schema.json`](schema/capability-map.schema.json)** —
+  which hidden attributes a driver may surface, and the capability each binds
+  to. Capability IDs must be namespaced, so a vendor attribute cannot silently
+  claim a standard identifier.
+
+[`auto_patch/capability-map.yaml`](auto_patch/capability-map.yaml) is the live
+map for the drivers shipped here, and is validated in CI on every push.
+
+Both schemas are versioned and shipped inside the installed package, so
+`edgeloom validate` works without a checkout.
+
+## Development
 
 ```bash
-make docker-build
+make install   # dependencies
+make lint      # ruff
+make test      # pytest
 ```
 
-Drop into a shell with the repo bind-mounted, ready to run scripts:
-
-```bash
-make docker-shell
-# inside container
-make test
-```
-
-Or execute the QA suite headlessly:
-
-```bash
-make docker-test
-```
-
-You can also use `docker compose run --rm dev bash` directly if you prefer the
-Compose workflow. The container automatically honors `GITHUB_TOKEN`, making it
-easy to run the discovery pipeline against the public SmartThings repos without
-throttling.
-
-## Find Device Model and Manufacturer
-
-Use the [SmartThings web app](https://my.smartthings.com) and navigate to
-**Advanced Users** to read the device’s model and manufacturer strings. These
-values must match the inputs passed to `auto_patch.sh`.
-
-![mysmartthings](assets/mysmartthings.png?raw=true)
-
-## Currently Supported Drivers and Attributes
-
-<table>
-  <tr>
-    <th> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SmartThings Edge Drivers &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-    <th> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Attributes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-  </tr>
-  <tr>
-    <td rowspan="9">zigbee-lock</td>
-    <td>Language</td>
-  </tr>
-  <tr><td>AutoRelockTime</td></tr>
-  <tr><td>SoundVolume</td></tr>
-  <tr><td>OperatingMode</td></tr>
-  <tr><td>EnableOneTouchLocking</td></tr>
-  <tr><td>EnableInsideStatusLED</td></tr>
-  <tr><td>EnablePrivacyModeButton</td></tr>
-  <tr><td>WrongCodeEntryLimit</td></tr>
-  <tr><td>UserCodeTemporaryDisableTime &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-
-  <tr>
-    <td>zigbee-siren</td>
-    <td>MaxDuration</td>
-  </tr>
-
-  <tr>
-    <td rowspan="2">hue-motion</td>
-    <td>PIROccupiedToUnoccupiedDelay</td>
-  </tr>
-  <tr><td>MotionSensitivity</td></tr>
-
-  <tr>
-    <td rowspan="7">zigbee-switch</td>
-    <td>IdentifyTime</td>
-  </tr>
-  <tr><td>DeviceEnabled</td></tr>
-  <tr><td>OnOffTransitionTime</td></tr>
-  <tr><td>OnLevel</td></tr>
-  <tr><td>OnTime</td></tr>
-  <tr><td>StartUpOnOff</td></tr>
-  <tr><td>StartUpColorTemperatureMireds</td></tr>
-
-  <tr>
-    <td rowspan="2">zigbee-dimmer-switch</td>
-    <td>CheckInInterval</td>
-  </tr>
-  <tr><td>FastPollTimeout</td></tr>
-
-  <tr>
-    <td rowspan="4">zigbee-contact</td>
-    <td>IdentifyTime</td>
-  </tr>
-  <tr><td>DeviceEnabled</td></tr>
-  <tr><td>CheckInInterval</td></tr>
-  <tr><td>FastPollTimeout</td></tr>
-
-  <tr>
-    <td rowspan="4">zigbee-water-leak-sensor</td>
-    <td>IdentifyTime</td>
-  </tr>
-  <tr><td>DeviceEnabled</td></tr>
-  <tr><td>CheckInInterval</td></tr>
-  <tr><td>FastPollTimeout</td></tr>
-
-  <tr>
-    <td rowspan="4">zigbee-button</td>
-    <td>IdentifyTime</td>
-  </tr>
-  <tr><td>DeviceEnabled</td></tr>
-  <tr><td>CheckInInterval</td></tr>
-  <tr><td>FastPollTimeout</td></tr>
-
-  <tr>
-    <td rowspan="4">zigbee-motion-sensor</td>
-    <td>IdentifyTime</td>
-  </tr>
-  <tr><td>DeviceEnabled</td></tr>
-  <tr><td>CheckInInterval</td></tr>
-  <tr><td>FastPollTimeout</td></tr>
-
-  <tr>
-    <td rowspan="3">zigbee-presence-sensor</td>
-    <td>IdentifyTime</td>
-  </tr>
-  <tr><td>CheckInInterval</td></tr>
-  <tr><td>FastPollTimeout</td></tr>
-</table>
+CI runs lint, the full test suite, `edgeloom validate`, and shellcheck on every
+push and pull request. See [docs/development.md](docs/development.md) for the
+container workflow.
 
 ## Roadmap
 
 - Expand the library of subdrivers and handler templates.
-- Add uninstall/restore helpers to undo patches without manual file copies.
-- Publish the CLI on PyPI for easier installation.
-- Improve Windows support (PowerShell wrapper + binary dependencies).
+- Broaden the capability map beyond Zigbee locks, switches, and sensors.
+- Grow the schema toward Matter and Home Assistant capability namespaces.
+- Native Windows validation (the Python `patch` path no longer needs bash).
+- Device reports from real hardware — see the
+  [device report template](.github/ISSUE_TEMPLATE/device_report.yml).
+
+## Security
+
+Please report vulnerabilities privately. See [SECURITY.md](SECURITY.md).
+
+Patching a driver changes what a device exposes on your own hub. EdgeLoom is
+research tooling: review a diff before installing anything on a hub you depend
+on, and keep the backup it creates.
 
 ## How to Cite
 
 If this project aids your research, cite the following work:
 
-```
+```bibtex
 @inproceedings{xu2025hiddenattributes,
   title     = {Discovering and Exploiting IoT Device Hidden Attributes: A New Vulnerability in Smart Homes},
   author    = {Xuening Xu and Chenglong Fu and Xiaojiang Du and Bo Luo},
@@ -325,8 +172,15 @@ If this project aids your research, cite the following work:
 }
 ```
 
+Machine-readable metadata is in [CITATION.cff](CITATION.cff).
+
 ## Contributing
 
-Bug reports and pull requests are welcome! Please review
-[CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and the
-[Code of Conduct](CODE_OF_CONDUCT.md) before participating.
+Bug reports, device reports, and pull requests are welcome. Start with
+[CONTRIBUTING.md](CONTRIBUTING.md) and the
+[Code of Conduct](CODE_OF_CONDUCT.md). Changes are recorded in
+[CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+Apache License 2.0 — see [LICENSE](LICENSE).

@@ -12,22 +12,61 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v7
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt
+          pip install -e ".[dev]"
 
       - name: Lint
-        run: make lint
+        run: python -m ruff check .
+
+      - name: Check formatting
+        run: python -m ruff format --check .
 
       - name: Run tests
-        run: make test
+        run: python -m pytest tests/ translator/tests/ -q
+
+      - name: Validate schemas and shipped artifacts
+        run: |
+          edgeloom validate auto_patch/capability-map.yaml -v
+          edgeloom validate auto_patch/zigbee-lock/profiles translator/ha_proxy_edge_driver/profiles
+
+      # The shell entrypoint was unlinted for the whole life of the project,
+      # which is how an `else:` typo survived in the backup guard.
+      - name: Lint shell entrypoint
+        run: |
+          sudo apt-get update && sudo apt-get install -y shellcheck
+          shellcheck auto_patch/auto_patch.sh
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+      - name: Build distributions
+        run: |
+          python -m pip install --upgrade pip build twine
+          python -m build
+          python -m twine check dist/*
+      - name: Verify the wheel installs and runs standalone
+        run: |
+          python -m venv /tmp/clean
+          /tmp/clean/bin/pip install dist/*.whl
+          /tmp/clean/bin/edgeloom --version
+          # Schemas must resolve from inside the wheel, with no checkout present.
+          cd /tmp && /tmp/clean/bin/python -c "from edgeloom import schemas; print(schemas.schema_path('profile'))"

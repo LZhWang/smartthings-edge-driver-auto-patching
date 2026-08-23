@@ -4,3 +4,9 @@ __pycache__/
 *.pyc
 .DS_Store
 *.egg-info/
+build/
+dist/
+.venv/
+venv/
+discovery/catalog*.json
+discovery/catalog*.yaml

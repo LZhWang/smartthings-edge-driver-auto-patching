@@ -4,8 +4,10 @@
 
 ## Testing
 
-- [ ] `make test`
-- [ ] `make lint`
+- [ ] `make test` (or `python -m pytest tests/ translator/tests/`)
+- [ ] `make lint` (`ruff check .`)
+- [ ] `ruff format --check .`
+- [ ] `edgeloom validate` passes on any profile or capability-map change
 - [ ] Other (describe):
 
 ## Checklist
@@ -13,6 +15,7 @@
 - [ ] Added/updated documentation
 - [ ] Added/updated tests
 - [ ] Ensured backward compatibility for existing automation workflow
+- [ ] Updated `CHANGELOG.md` under Unreleased
 
 ## Screenshots / Demo (optional)
 

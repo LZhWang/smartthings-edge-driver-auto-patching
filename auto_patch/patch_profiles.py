@@ -72,8 +72,7 @@ def patch_fingerprints(devices: Iterable[dict], model: str, manufacturer: str | 
             )
             return profile_name
     raise ValueError(
-        f"Unable to find fingerprint for model '{model}' "
-        f"(manufacturer='{manufacturer}')",
+        f"Unable to find fingerprint for model '{model}' (manufacturer='{manufacturer}')",
     )
 
 

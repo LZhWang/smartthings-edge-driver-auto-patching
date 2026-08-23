@@ -19,14 +19,11 @@ RUN groupadd --gid ${USER_GID} ${USERNAME} \
 
 WORKDIR /workspace
 
-# Pre-install dependencies for better layer caching
-COPY requirements.txt requirements-dev.txt /tmp/deps/
-COPY auto_patch/requirements.txt /tmp/deps/auto_patch/
-RUN python -m pip install -r /tmp/deps/requirements-dev.txt \
-    && rm -rf /tmp/deps
-
-# Copy project files
+# Copy the project first: an editable install needs pyproject.toml and the
+# package sources present, so dependencies cannot be pre-installed in isolation.
 COPY . /workspace
+
+RUN python -m pip install --no-cache-dir -e ".[dev]"
 
 RUN chown -R ${USERNAME}:${USERNAME} /workspace
 

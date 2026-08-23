@@ -1,0 +1,16 @@
+name: ha_light_color
+components:
+  - id: main
+    label: Main
+    capabilities:
+      - id: switch
+        version: 1
+      - id: switchLevel
+        version: 1
+      - id: colorControl
+        version: 1
+    categories:
+      - name: Light
+metadata:
+  vid: vid-ha_light_color
+  mnmn: ha2st-edge

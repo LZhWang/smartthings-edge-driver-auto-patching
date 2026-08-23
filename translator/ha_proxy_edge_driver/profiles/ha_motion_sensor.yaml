@@ -1,0 +1,12 @@
+name: ha_motion_sensor
+components:
+  - id: main
+    label: Main
+    capabilities:
+      - id: motionSensor
+        version: 1
+    categories:
+      - name: MotionSensor
+metadata:
+  vid: vid-ha_motion_sensor
+  mnmn: ha2st-edge

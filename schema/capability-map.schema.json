@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/edgeloom-oss/edgeloom/schema/v0.1/capability-map.schema.json",
+  "title": "EdgeLoom capability map",
+  "description": "Declares, per driver, which hidden device attributes EdgeLoom may surface and which capability each one binds to. This is the reviewable statement of what a patch run is allowed to expose; it supersedes the untyped INI pair (custom_capability_list.config, driver2patch.config).",
+  "type": "object",
+  "required": ["version", "drivers"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$",
+      "description": "Schema version this document targets, e.g. '0.1'."
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["smartthings", "home-assistant"],
+      "default": "smartthings",
+      "description": "Target platform. The map is platform-scoped because capability namespaces are not portable across ecosystems."
+    },
+    "drivers": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Keyed by driver directory name, e.g. 'zigbee-lock'.",
+      "propertyNames": { "pattern": "^[a-z0-9][a-z0-9-]*$" },
+      "additionalProperties": { "$ref": "#/$defs/driver" }
+    }
+  },
+  "$defs": {
+    "driver": {
+      "type": "object",
+      "required": ["attributes"],
+      "additionalProperties": false,
+      "properties": {
+        "handler": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_]+$",
+          "description": "Stem of the Lua handler injected into the driver's src/, e.g. 'lock_patch'."
+        },
+        "subdriver": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "description": "Subdriver template directory copied into the driver, e.g. 'lock-patch'."
+        },
+        "attributes": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Maps a device attribute name to the capability ID that exposes it.",
+          "propertyNames": { "pattern": "^[A-Za-z][A-Za-z0-9]*$" },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+\\.[A-Za-z][A-Za-z0-9]*$",
+            "description": "Namespaced capability ID, e.g. 'adminmusic34435.autoRelockTime'."
+          }
+        }
+      }
+    }
+  }
+}

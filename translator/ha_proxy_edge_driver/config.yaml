@@ -1,0 +1,12 @@
+name: "Home Assistant Proxy"
+packageKey: "edge-ha-proxy"
+permissions:
+  lan: {}
+profiles:
+  - ha_light_dimmable
+  - ha_light_basic
+  - ha_light_color
+  - ha_switch_basic
+  - ha_lock_basic
+  - ha_contact_sensor
+  - ha_motion_sensor

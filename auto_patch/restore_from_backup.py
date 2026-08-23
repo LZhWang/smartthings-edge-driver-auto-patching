@@ -1,4 +1,5 @@
 """Restore patched SmartThings Edge drivers from backups."""
+
 from __future__ import annotations
 
 import argparse
@@ -21,9 +22,7 @@ def configure_logging(verbose: bool = False) -> None:
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     """Parse CLI arguments."""
-    parser = argparse.ArgumentParser(
-        description="Restore a patched SmartThings Edge driver from its backup."
-    )
+    parser = argparse.ArgumentParser(description="Restore a patched SmartThings Edge driver from its backup.")
     parser.add_argument(
         "--driver",
         required=True,

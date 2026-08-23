@@ -43,7 +43,7 @@ def test_validate_reports_failures_and_exits_nonzero(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     bad = tmp_path / "bad.yaml"
-    bad.write_text("name: x\ncomponents: []\n", encoding="utf-8")
+    bad.write_text("components: []\n", encoding="utf-8")
 
     assert main(["validate", str(bad)]) == 1
     out = capsys.readouterr().out

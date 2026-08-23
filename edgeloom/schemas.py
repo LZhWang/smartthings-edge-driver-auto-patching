@@ -74,9 +74,9 @@ def detect_kind(document: Any) -> str | None:
     """
     if not isinstance(document, dict):
         return None
-    if "drivers" in document and "version" in document:
+    if isinstance(document.get("drivers"), dict):
         return CAPABILITY_MAP
-    if "components" in document and "name" in document:
+    if isinstance(document.get("components"), list):
         return PROFILE
     return None
 

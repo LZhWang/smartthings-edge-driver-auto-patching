@@ -7,6 +7,11 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixed
+
+- `edgeloom validate` now reports profiles and capability maps that omit their
+  required `name` or `version` key instead of silently skipping them.
+
 ## [0.1.0] - 2026-08-23
 
 First release under the EdgeLoom name. Unifies the SmartThings Edge driver

@@ -1,0 +1,12 @@
+name: ha_contact_sensor
+components:
+  - id: main
+    label: Main
+    capabilities:
+      - id: contactSensor
+        version: 1
+    categories:
+      - name: ContactSensor
+metadata:
+  vid: vid-ha_contact_sensor
+  mnmn: ha2st-edge

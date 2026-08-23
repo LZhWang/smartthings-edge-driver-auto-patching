@@ -1,0 +1,12 @@
+name: ha_lock_basic
+components:
+  - id: main
+    label: Main
+    capabilities:
+      - id: lock
+        version: 1
+    categories:
+      - name: SmartLock
+metadata:
+  vid: vid-ha_lock_basic
+  mnmn: ha2st-edge

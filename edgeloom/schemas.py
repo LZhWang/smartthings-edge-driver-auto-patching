@@ -113,13 +113,45 @@ def validate_document(path: Path, kind: str | None = None) -> ValidationResult:
     return ValidationResult(path=path, kind=resolved, errors=tuple(errors))
 
 
+# Directories that hold other people's files. Walking into them produces
+# findings about vendored artifacts rather than about this project. pip, for
+# one, ships CycloneDX SBOMs under .dist-info/sboms/ whose top-level
+# "components" is a list, which is shape-identical to a device profile.
+VENDOR_DIRS = frozenset(
+    {
+        "node_modules",
+        "site-packages",
+        "venv",
+        "build",
+        "dist",
+        "__pycache__",
+    }
+)
+
+
+def _is_vendored(path: Path, root: Path) -> bool:
+    """True if any directory between root and path is vendored or hidden."""
+    try:
+        parts = path.relative_to(root).parts[:-1]
+    except ValueError:
+        return False
+    return any(part in VENDOR_DIRS or part.startswith(".") for part in parts)
+
+
 def iter_documents(targets: list[Path]) -> list[Path]:
-    """Expand files and directories into a sorted list of candidate documents."""
+    """Expand files and directories into a sorted list of candidate documents.
+
+    Hidden and vendored directories are not descended into. A file named
+    explicitly is always honoured, so `edgeloom validate .venv/thing.yaml`
+    still works; only the recursive walk prunes.
+    """
     found: set[Path] = set()
     for target in targets:
         if target.is_dir():
             for suffix in sorted(DOCUMENT_SUFFIXES):
-                found.update(p for p in target.rglob(f"*{suffix}") if p.is_file())
+                found.update(
+                    p for p in target.rglob(f"*{suffix}") if p.is_file() and not _is_vendored(p, target)
+                )
         elif target.is_file():
             found.add(target)
         else:

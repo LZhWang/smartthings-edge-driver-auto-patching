@@ -1,5 +1,4 @@
 import pytest
-
 from ha2st_edge.mapping import infer_profile
 
 

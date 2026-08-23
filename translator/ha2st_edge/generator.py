@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import Any
 
 import yaml
 
@@ -10,7 +10,7 @@ def _profile_filename(profile_name: str) -> str:
     return f"{profile_name}.yaml"
 
 
-def _render_profile_yaml(spec: DeviceProfileSpec) -> Dict[str, Any]:
+def _render_profile_yaml(spec: DeviceProfileSpec) -> dict[str, Any]:
     return {
         "name": spec.profile_name,
         "components": [
@@ -26,14 +26,14 @@ def _render_profile_yaml(spec: DeviceProfileSpec) -> Dict[str, Any]:
 
 
 def generate_profiles_and_config(
-    mapped: List[Dict[str, Any]], output_dir: Path, ha_base_url: str, ha_token: str | None = None
+    mapped: list[dict[str, Any]], output_dir: Path, ha_base_url: str, ha_token: str | None = None
 ) -> None:
     profiles_dir = output_dir / "profiles"
     config_dir = output_dir / "config"
     profiles_dir.mkdir(parents=True, exist_ok=True)
     config_dir.mkdir(parents=True, exist_ok=True)
 
-    seen_profiles: Dict[str, DeviceProfileSpec] = {}
+    seen_profiles: dict[str, DeviceProfileSpec] = {}
     for item in mapped:
         spec: DeviceProfileSpec = item["profile"]
         if spec.profile_name not in seen_profiles:
@@ -50,7 +50,11 @@ def generate_profiles_and_config(
         spec = item["profile"]
         label = state.get("attributes", {}).get("friendly_name") or state.get("entity_id")
         devices_payload.append(
-            {"st_label": f"{label} (HA)", "ha_entity_id": state.get("entity_id"), "profile": spec.profile_name}
+            {
+                "st_label": f"{label} (HA)",
+                "ha_entity_id": state.get("entity_id"),
+                "profile": spec.profile_name,
+            }
         )
 
     config_payload = {"ha_base_url": ha_base_url, "devices": devices_payload}

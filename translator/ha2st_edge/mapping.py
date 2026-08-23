@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional, Dict, Any
+from typing import Any
 
 SUPPORTED_BINARY_SENSOR_CONTACT = {"door", "window", "opening"}
 SUPPORTED_BINARY_SENSOR_MOTION = {"motion"}
@@ -8,11 +8,11 @@ SUPPORTED_BINARY_SENSOR_MOTION = {"motion"}
 @dataclass
 class DeviceProfileSpec:
     profile_name: str
-    capabilities: List[str]
+    capabilities: list[str]
     category: str
 
 
-def infer_profile(state: Dict[str, Any]) -> Optional[DeviceProfileSpec]:
+def infer_profile(state: dict[str, Any]) -> DeviceProfileSpec | None:
     entity_id = state.get("entity_id", "")
     if "." not in entity_id:
         return None

@@ -4,7 +4,10 @@
   "title": "EdgeLoom device profile",
   "description": "A hub-side device profile: the set of capabilities a driver exposes for one device, and the categories that describe it. This is the contract both EdgeLoom paths converge on -- profiles emitted by the translator and profiles rewritten by the patcher must both validate against it.",
   "type": "object",
-  "required": ["name", "components"],
+  "required": [
+    "name",
+    "components"
+  ],
   "additionalProperties": false,
   "properties": {
     "name": {
@@ -16,19 +19,28 @@
       "type": "array",
       "minItems": 1,
       "description": "Addressable sub-units of the device. A device with no sub-units still declares a single component, by convention 'main'.",
-      "items": { "$ref": "#/$defs/component" }
+      "items": {
+        "$ref": "#/$defs/component"
+      }
     },
-    "metadata": { "$ref": "#/$defs/metadata" },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
     "preferences": {
       "type": "array",
       "description": "Optional user-settable driver preferences.",
-      "items": { "type": "object" }
+      "items": {
+        "type": "object"
+      }
     }
   },
   "$defs": {
     "component": {
       "type": "object",
-      "required": ["id", "capabilities"],
+      "required": [
+        "id",
+        "capabilities"
+      ],
       "additionalProperties": false,
       "properties": {
         "id": {
@@ -44,18 +56,24 @@
           "type": "array",
           "minItems": 1,
           "description": "Capabilities exposed by this component.",
-          "items": { "$ref": "#/$defs/capability" }
+          "items": {
+            "$ref": "#/$defs/capability"
+          }
         },
         "categories": {
           "type": "array",
           "description": "Device categories used for presentation and grouping.",
-          "items": { "$ref": "#/$defs/category" }
+          "items": {
+            "$ref": "#/$defs/category"
+          }
         }
       }
     },
     "capability": {
       "type": "object",
-      "required": ["id"],
+      "required": [
+        "id"
+      ],
       "additionalProperties": false,
       "properties": {
         "id": {
@@ -68,24 +86,42 @@
           "type": "integer",
           "minimum": 1,
           "description": "Capability version. Defaults to 1 when omitted."
+        },
+        "config": {
+          "type": "object",
+          "description": "Platform presentation configuration for this capability, e.g. value ranges. Its inner shape is owned by the platform, not by EdgeLoom, so it is accepted as an opaque object.",
+          "additionalProperties": true
         }
       }
     },
     "category": {
       "type": "object",
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "additionalProperties": false,
       "properties": {
-        "name": { "type": "string", "minLength": 1 }
+        "name": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "metadata": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "vid": { "type": "string", "description": "Presentation/visual identifier." },
-        "mnmn": { "type": "string", "description": "Manufacturer name code." },
-        "ocfDeviceType": { "type": "string" }
+        "vid": {
+          "type": "string",
+          "description": "Presentation/visual identifier."
+        },
+        "mnmn": {
+          "type": "string",
+          "description": "Manufacturer name code."
+        },
+        "ocfDeviceType": {
+          "type": "string"
+        }
       }
     }
   }

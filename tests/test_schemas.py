@@ -180,6 +180,10 @@ def test_repo_document_census_recognizes_only_schema_artifacts(repo_root: Path) 
     """Repository-wide inference must find every schema artifact and skip support YAML."""
     expected = {
         Path("auto_patch/capability-map.yaml"),
+        # Vendored upstream corpus; see tests/fixtures/upstream_profiles/README.md.
+        Path("tests/fixtures/upstream_profiles/base-lock.yml"),
+        Path("tests/fixtures/upstream_profiles/color-temp-bulb.yml"),
+        Path("tests/fixtures/upstream_profiles/frient-switch-power-energy-voltage.yml"),
         Path("auto_patch/zigbee-lock/profiles/base-lock.yml"),
         Path("auto_patch/zigbee-lock/profiles/lock-battery.yml"),
         Path("auto_patch/zigbee-lock/profiles/lock-without-codes.yml"),
@@ -225,3 +229,52 @@ def test_explicitly_named_vendored_file_is_still_honoured(tmp_path: Path) -> Non
     target = _write(hidden / "profile.yaml", VALID_PROFILE)
 
     assert schemas.iter_documents([target]) == [target]
+
+
+def test_real_upstream_profiles_are_accepted(repo_root: Path) -> None:
+    """The schema is only an assurance layer if it accepts what the platform ships.
+
+    An earlier revision declared additionalProperties: false on capability
+    entries without checking against real data, and rejected 13 of 38 upstream
+    SmartThings profiles over the `config` key. See the corpus README.
+    """
+    corpus = repo_root / "tests" / "fixtures" / "upstream_profiles"
+    profiles = sorted(corpus.glob("*.yml"))
+    assert profiles, "upstream corpus is missing"
+
+    failures = {
+        path.name: result.errors
+        for path in profiles
+        for result in [schemas.validate_document(path)]
+        if not result.ok
+    }
+    assert not failures, f"schema rejects real upstream profiles: {failures}"
+
+
+def test_capability_config_is_accepted_and_opaque(tmp_path: Path) -> None:
+    """`config` carries platform presentation data EdgeLoom does not model."""
+    profile = {
+        "name": "x",
+        "components": [
+            {
+                "id": "main",
+                "capabilities": [
+                    {
+                        "id": "colorTemperature",
+                        "version": 1,
+                        "config": {"values": [{"key": "colorTemperature.value", "range": [2700, 6500]}]},
+                    }
+                ],
+            }
+        ],
+    }
+    assert schemas.validate_document(_write(tmp_path / "p.yaml", profile)).ok
+
+
+def test_unknown_capability_key_is_still_rejected(tmp_path: Path) -> None:
+    """Accepting `config` must not turn the capability object into a free-for-all."""
+    profile = {
+        "name": "x",
+        "components": [{"id": "main", "capabilities": [{"id": "switch", "verison": 1}]}],
+    }
+    assert not schemas.validate_document(_write(tmp_path / "p.yaml", profile)).ok

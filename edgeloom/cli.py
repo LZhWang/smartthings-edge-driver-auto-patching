@@ -92,20 +92,51 @@ def _cmd_discover(args: argparse.Namespace) -> int:
         return 1
 
     drivers, stats = summarize_fingerprints(fingerprints)
-    unsupported = detect_unsupported_drivers(drivers, args.cap_config)
+
+    # detect_unsupported_drivers reads the capability config with configparser,
+    # which returns silently on a missing file and would then report every
+    # driver as unmapped. The default is a repo-relative path, so for anyone who
+    # pip-installed EdgeLoom that silent-and-wrong answer is the default answer.
+    if args.cap_config.is_file():
+        unsupported = detect_unsupported_drivers(drivers, args.cap_config)
+        cross_checked = True
+    else:
+        unsupported = []
+        cross_checked = False
+        LOGGER.warning(
+            "Capability cross-check skipped: no config at %s. Pass --cap-config to enable it.",
+            args.cap_config,
+        )
+
     catalog = {
         "generated_at": datetime.now(UTC).isoformat(),
         "source": args.source,
         "stats": stats,
+        "capability_cross_check": "performed" if cross_checked else "skipped",
         "unsupported_drivers": unsupported,
         "drivers": drivers,
     }
+
+    # Finding nothing is not success. `validate` already takes this position;
+    # discover reporting "0 drivers" with exit 0 hid a wrong --driver-subpath.
+    if stats["driver_count"] == 0:
+        LOGGER.error(
+            "No drivers found under %r in %s. Upstream nests by vendor, so a subpath "
+            "of 'drivers' walks vendor directories that hold no fingerprints.yml; "
+            "try 'drivers/SmartThings'.",
+            args.driver_subpath,
+            args.repo if args.source == "github" else args.local_dir,
+        )
+        return 1
+
     write_output(catalog, args.output, args.format)
     print(
         f"Discovered {stats['fingerprint_count']} fingerprints across "
         f"{stats['driver_count']} drivers -> {args.output}"
     )
-    if unsupported:
+    if not cross_checked:
+        print("Capability cross-check skipped (no capability config found).")
+    elif unsupported:
         print(f"{len(unsupported)} driver(s) have no capability mapping yet: {', '.join(unsupported)}")
     return 0
 
@@ -220,9 +251,9 @@ def build_parser() -> argparse.ArgumentParser:
         "discover", parents=[common], help="Enumerate Edge drivers and their Zigbee fingerprints"
     )
     discover.add_argument("--source", choices=["github", "local"], default="github")
-    discover.add_argument("--repo", default="SmartThingsCommunity/edge-drivers")
+    discover.add_argument("--repo", default="SmartThingsCommunity/SmartThingsEdgeDrivers")
     discover.add_argument("--branch", default="main")
-    discover.add_argument("--driver-subpath", default="drivers")
+    discover.add_argument("--driver-subpath", default="drivers/SmartThings")
     discover.add_argument("--local-dir", type=Path, help="Local directory containing drivers")
     discover.add_argument("--output", type=Path, default=Path("discovery/catalog.json"))
     discover.add_argument("--format", choices=["json", "yaml"], default="json")

@@ -15,7 +15,10 @@ import yaml
 
 LOGGER = logging.getLogger("edge_patcher.discovery")
 GITHUB_API_URL = "https://api.github.com"
-DEFAULT_DRIVER_SUBPATH = "drivers"
+# Upstream nests by vendor: drivers/{ABB,Aqara,DeepSmart,SinuxSoft,SmartThings,
+# Unofficial}. Pointing at "drivers" alone walks vendor directories, which hold
+# no fingerprints.yml, and finds nothing.
+DEFAULT_DRIVER_SUBPATH = "drivers/SmartThings"
 
 
 @dataclass
@@ -196,7 +199,9 @@ def parse_args() -> argparse.Namespace:
         default="github",
         help="Where to discover drivers from",
     )
-    parser.add_argument("--repo", default="SmartThingsCommunity/edge-drivers", help="GitHub repo to query")
+    parser.add_argument(
+        "--repo", default="SmartThingsCommunity/SmartThingsEdgeDrivers", help="GitHub repo to query"
+    )
     parser.add_argument("--branch", default="main", help="Git branch to use")
     parser.add_argument("--driver-subpath", default=DEFAULT_DRIVER_SUBPATH, help="Driver subdirectory")
     parser.add_argument("--local-dir", type=Path, help="Local directory containing drivers")

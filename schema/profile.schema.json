@@ -91,6 +91,11 @@
           "type": "object",
           "description": "Platform presentation configuration for this capability, e.g. value ranges. Its inner shape is owned by the platform, not by EdgeLoom, so it is accepted as an opaque object.",
           "additionalProperties": true
+        },
+        "deviceConfig": {
+          "type": "object",
+          "description": "Platform device-level configuration for this capability. Like config, its inner shape is owned by the platform and is accepted opaquely.",
+          "additionalProperties": true
         }
       }
     },

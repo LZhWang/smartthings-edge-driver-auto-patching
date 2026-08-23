@@ -72,3 +72,82 @@ def test_translate_requires_a_token(monkeypatch: pytest.MonkeyPatch, tmp_path: P
 
 def test_discover_requires_local_dir_for_local_source(tmp_path: Path) -> None:
     assert main(["discover", "--source", "local", "--output", str(tmp_path / "c.json")]) == 1
+
+
+def test_discover_defaults_point_at_a_repo_that_exists() -> None:
+    """The shipped defaults have to resolve; they previously 404'd.
+
+    `--repo` defaulted to SmartThingsCommunity/edge-drivers, which does not
+    exist, and `--driver-subpath` to "drivers", which upstream nests by vendor
+    so it contains no fingerprints.yml at that level.
+    """
+    from edgeloom.cli import build_parser
+
+    args = build_parser().parse_args(["discover", "--output", "/dev/null"])
+
+    assert args.repo == "SmartThingsCommunity/SmartThingsEdgeDrivers"
+    assert args.driver_subpath == "drivers/SmartThings"
+
+
+def test_discover_reports_zero_results_as_failure(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Finding nothing is not success; it used to exit 0 and hide a bad subpath."""
+    from discovery import discover_drivers
+
+    monkeypatch.setattr(discover_drivers, "discover_from_local", lambda *a, **k: [])
+    empty = tmp_path / "drivers"
+    empty.mkdir()
+
+    assert (
+        main(
+            [
+                "discover",
+                "--source",
+                "local",
+                "--local-dir",
+                str(empty),
+                "--output",
+                str(tmp_path / "c.json"),
+            ]
+        )
+        == 1
+    )
+
+
+def test_discover_says_so_when_the_capability_cross_check_is_skipped(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A missing capability config used to report every driver as unmapped.
+
+    configparser returns silently on a missing file, and the default path is
+    repo-relative, so for a pip-installed user the wrong answer was the default.
+    """
+    driver = tmp_path / "drivers" / "zigbee-lock"
+    driver.mkdir(parents=True)
+    (driver / "fingerprints.yml").write_text(
+        "zigbeeManufacturer:\n- id: x\n  manufacturer: Yale\n  model: M\n", encoding="utf-8"
+    )
+
+    code = main(
+        [
+            "discover",
+            "--source",
+            "local",
+            "--local-dir",
+            str(tmp_path),
+            "--driver-subpath",
+            "drivers",
+            "--cap-config",
+            str(tmp_path / "absent.config"),
+            "--output",
+            str(tmp_path / "c.json"),
+        ]
+    )
+
+    assert code == 0
+    out = capsys.readouterr().out
+    assert "cross-check skipped" in out
+    import json
+
+    catalog = json.loads((tmp_path / "c.json").read_text())
+    assert catalog["capability_cross_check"] == "skipped"
+    assert catalog["unsupported_drivers"] == []

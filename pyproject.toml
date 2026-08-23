@@ -1,0 +1,69 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "edgeloom"
+dynamic = ["version"]
+description = "An open toolchain for validating, patching, and translating smart-home edge drivers across platforms"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+keywords = ["smarthome", "iot", "smartthings", "home-assistant", "zigbee", "edge-drivers", "security"]
+authors = [
+    { name = "Chenglong Fu", email = "chenglong.fu@charlotte.edu" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Home Automation",
+    "Topic :: Security",
+    "Topic :: Software Development :: Code Generators",
+]
+dependencies = [
+    "PyYAML>=6.0",
+    "requests>=2.28",
+    "jsonschema>=4.18",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "pytest-cov", "ruff"]
+
+[project.urls]
+Homepage = "https://github.com/edgeloom-oss/edgeloom"
+Repository = "https://github.com/edgeloom-oss/edgeloom"
+Issues = "https://github.com/edgeloom-oss/edgeloom/issues"
+Changelog = "https://github.com/edgeloom-oss/edgeloom/blob/main/CHANGELOG.md"
+
+[project.scripts]
+edgeloom = "edgeloom.cli:main"
+
+[tool.hatch.version]
+path = "edgeloom/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+# ha2st_edge lands at the top level of the wheel even though the checkout keeps
+# it under translator/, so `import ha2st_edge` works the same either way.
+packages = ["edgeloom", "auto_patch", "discovery", "translator/ha2st_edge"]
+# zigbee-lock is a sample driver used as a test fixture, not shipped code.
+exclude = ["auto_patch/zigbee-lock"]
+
+[tool.hatch.build.targets.wheel.force-include]
+# The canonical schemas live at the repo root so they stay browsable and
+# citable; ship a copy inside the package so `edgeloom validate` works from an
+# installed wheel with no checkout present.
+"schema" = "edgeloom/schema"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/edgeloom", "/auto_patch", "/discovery", "/translator", "/schema", "/tests",
+    "/README.md", "/LICENSE", "/CHANGELOG.md", "/SECURITY.md", "/CITATION.cff",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "translator/tests"]

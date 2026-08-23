@@ -1,3 +1,5 @@
+> **This project has moved.** Development continues as the `translator/` component of [EdgeLoom](https://github.com/edgeloom-oss/edgeloom), where the full commit history is preserved.
+
 # Home Assistant → SmartThings Edge Bridge
 
 A minimal scaffold to generate SmartThings Edge proxy artifacts for Home Assistant entities.

@@ -68,6 +68,9 @@ MANUFACTURER_ARG=$3
 ATTRIBUTES_ARG=$4
 BACKUP_DIR="${DRIVER_ARG}-backup"
 
+# Expanded below as "${COMMON_ARGS[@]+...}" because bash 3.2 (the default on
+# macOS) treats expansion of an empty array under `set -u` as an unbound
+# variable error, which broke every invocation that passed no optional flags.
 COMMON_ARGS=()
 if [[ "${DRY_RUN}" == true ]]; then
     COMMON_ARGS+=("--dry-run")
@@ -78,6 +81,11 @@ fi
 
 restore_backup() {
     if [[ "${DRY_RUN}" == true ]]; then
+        exit 1
+    fi
+    if [[ ! -d "${BACKUP_DIR}" ]]; then
+        echo "FATAL: no backup found at ${BACKUP_DIR}; refusing to delete ${DRIVER_ARG}." >&2
+        echo "The driver may be in a partially patched state. Inspect it before reuse." >&2
         exit 1
     fi
     echo "Restoring backup due to an error..."
@@ -95,13 +103,19 @@ create_backup() {
 
     if [[ -d "${BACKUP_DIR}" ]]; then
         echo "Backup already exists at ${BACKUP_DIR}; it will be reused."
-    else:
+    else
         echo "Creating driver backup at ${BACKUP_DIR}..."
         cp -r "${DRIVER_ARG}" "${BACKUP_DIR}"
     fi
 }
 
 cd "${SCRIPT_DIR}"
+
+if [[ ! -d "${DRIVER_ARG}" ]]; then
+    echo "ArgumentError: driver directory '${DRIVER_ARG}' not found under ${SCRIPT_DIR}." >&2
+    exit 1
+fi
+
 create_backup
 
 echo "Running Step 1: Patching fingerprints..."
@@ -111,7 +125,7 @@ if ! python3 "${PYTHON_SCRIPT_1}" \
     --mfg "${MANUFACTURER_ARG}" \
     --attributes "${ATTRIBUTES_ARG}" \
     --config "${SCRIPT_DIR}/custom_capability_list.config" \
-    "${COMMON_ARGS[@]}"; then
+    "${COMMON_ARGS[@]+"${COMMON_ARGS[@]}"}"; then
     echo "Error occurred in Step 1."
     restore_backup
 fi
@@ -120,7 +134,7 @@ echo "Running Step 2: Patching handler functions..."
 if ! python3 "${PYTHON_SCRIPT_2}" \
     --driver "${DRIVER_ARG}" \
     --config "${SCRIPT_DIR}/driver2patch.config" \
-    "${COMMON_ARGS[@]}"; then
+    "${COMMON_ARGS[@]+"${COMMON_ARGS[@]}"}"; then
     echo "Error occurred in Step 2."
     restore_backup
 fi
@@ -131,7 +145,7 @@ if ! python3 "${PYTHON_SCRIPT_3}" \
     --model "${MODEL_ARG}" \
     --mfg "${MANUFACTURER_ARG}" \
     --config "${SCRIPT_DIR}/driver2patch.config" \
-    "${COMMON_ARGS[@]}"; then
+    "${COMMON_ARGS[@]+"${COMMON_ARGS[@]}"}"; then
     echo "Error occurred in Step 3."
     restore_backup
 fi

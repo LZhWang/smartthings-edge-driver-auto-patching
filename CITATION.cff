@@ -32,6 +32,7 @@ authors:
     affiliation: University of Kansas
   - family-names: Wu
     given-names: Chuxiong
+    affiliation: Southern Illinois University Carbondale
 preferred-citation:
   type: conference-paper
   title: "Discovering and Exploiting IoT Device Hidden Attributes: A New Vulnerability in Smart Homes"

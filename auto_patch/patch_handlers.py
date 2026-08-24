@@ -5,6 +5,11 @@ import shutil
 import sys
 from pathlib import Path
 
+try:  # imported as a package by edgeloom.patching and the test suite
+    from auto_patch.paths import contained_path
+except ImportError:  # executed directly: python auto_patch/patch_handlers.py
+    from paths import contained_path
+
 LOGGER = logging.getLogger("edge_patcher.patch_handlers")
 SCRIPT_ROOT = Path(__file__).resolve().parent
 DEFAULT_DRIVER_CONFIG = SCRIPT_ROOT / "driver2patch.config"
@@ -43,7 +48,8 @@ def patch_handlers(
     if not patch_src.exists():
         raise FileNotFoundError(f"Patch file not found: {patch_src}")
 
-    patch_dest = driver_dir / "src" / f"{filename}.lua"
+    # A driver shipping src/ as a symlink would otherwise redirect this write.
+    patch_dest = contained_path(driver_dir, "src", f"{filename}.lua")
     if patch_dest.exists():
         LOGGER.info("[Step 2] handler already present at %s", patch_dest)
         return patch_dest

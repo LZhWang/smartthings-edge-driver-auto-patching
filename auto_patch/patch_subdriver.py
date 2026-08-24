@@ -8,8 +8,10 @@ from pathlib import Path
 
 try:  # imported as a package by edgeloom.patching and the test suite
     from auto_patch.luagen import lua_string
+    from auto_patch.paths import contained_path
 except ImportError:  # executed directly: python auto_patch/patch_subdriver.py
     from luagen import lua_string
+    from paths import contained_path
 
 LOGGER = logging.getLogger("edge_patcher.patch_subdriver")
 SCRIPT_ROOT = Path(__file__).resolve().parent
@@ -34,7 +36,7 @@ def copy_subdriver_template(driver_dir: Path, subdriver: str, dry_run: bool) -> 
     src_path = SUBDRIVER_SOURCE_DIR / subdriver
     if not src_path.exists():
         raise FileNotFoundError(f"Subdriver template not found: {src_path}")
-    dest_path = driver_dir / "src" / subdriver
+    dest_path = contained_path(driver_dir, "src", subdriver)
 
     if dest_path.exists():
         LOGGER.info("[Step 3] subdriver already present at %s", dest_path)
@@ -54,7 +56,7 @@ def add_device_model(subdriver_path: Path, manufacturer: str, model: str, dry_ru
     if not model:
         raise ValueError("Model is required when adding device models")
 
-    init_path = subdriver_path / "init.lua"
+    init_path = contained_path(subdriver_path, "init.lua")
     if not init_path.exists():
         if dry_run:
             LOGGER.info("[Dry run] Would create %s and add %s/%s", init_path, manufacturer, model)
@@ -108,7 +110,9 @@ def construct_new_subdrivers_block(existing_block: str, new_driver: str) -> str:
 
 
 def update_parent_driver_template(driver_dir: Path, subdriver: str, dry_run: bool) -> None:
-    parent_driver_path = driver_dir / "src" / "init.lua"
+    # Refuses a symlinked src/ or src/init.lua, either of which would
+    # redirect this in-place rewrite onto a file outside the driver.
+    parent_driver_path = contained_path(driver_dir, "src", "init.lua")
     if not parent_driver_path.exists():
         raise FileNotFoundError(f"Parent driver init.lua not found: {parent_driver_path}")
 
@@ -158,7 +162,7 @@ def patch_subdriver(
     subdriver = config[driver_name]["subdriver"]
 
     created = copy_subdriver_template(driver_dir, subdriver, dry_run)
-    subdriver_path = driver_dir / "src" / subdriver
+    subdriver_path = contained_path(driver_dir, "src", subdriver)
     if created or subdriver_path.exists():
         add_device_model(subdriver_path, manufacturer, model, dry_run)
         update_parent_driver_template(driver_dir, subdriver, dry_run)

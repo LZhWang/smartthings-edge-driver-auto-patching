@@ -155,12 +155,11 @@ def patch_profiles(
         write_yaml(fingerprints_path, fingerprints)
         LOGGER.info("Patched fingerprints saved to %s", fingerprints_path)
 
-    # Contain against profiles/ rather than the driver root: a name that
-    # climbs out of profiles/ but stays inside the driver is still not a
-    # profile path, and should not be written.
-    profiles_dir = driver_dir / "profiles"
-    original_profile_path = contained_path(profiles_dir, f"{profile_name}.yml")
-    patched_profile_path = contained_path(profiles_dir, f"{profile_name}-patch.yml")
+    # Anchor on driver_dir, which the operator named, and pass "profiles" as a
+    # component so a symlinked profiles/ is caught. Anchoring on the profiles
+    # directory itself would resolve that symlink and move the anchor.
+    original_profile_path = contained_path(driver_dir, "profiles", f"{profile_name}.yml")
+    patched_profile_path = contained_path(driver_dir, "profiles", f"{profile_name}-patch.yml")
     create_new_profile(original_profile_path, patched_profile_path, custom_capabilities, dry_run)
 
     return profile_name

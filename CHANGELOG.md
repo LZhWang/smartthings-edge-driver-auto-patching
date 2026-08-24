@@ -9,6 +9,19 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Security
 
+- **Symlinks in a driver defeated path containment.** Two defects, both
+  reachable from a driver the operator downloaded. `contained_path` resolved
+  its own base, and `patch_profiles` passed `driver_dir/profiles` as that base,
+  so a driver shipping `profiles` as a symlink relocated the containment anchor
+  itself and every write under it was judged contained — reopening the escape
+  the guard was added to close. Separately, `patch_handlers` and
+  `patch_subdriver` applied no containment at all, so a symlinked `src/`, or a
+  single symlinked `src/init.lua`, redirected the code-generation writes and an
+  in-place Lua rewrite onto a file outside the driver. Containment now anchors
+  on the driver directory the operator named, refuses symlinked components
+  outright rather than following them, and is applied at every write site in
+  all three patch steps.
+
 - **Path containment for driver-supplied profile names.** A driver's
   `fingerprints.yml` is authored by whoever published that driver, and
   `patch_profiles.py` used its `deviceProfileName` to build filesystem paths

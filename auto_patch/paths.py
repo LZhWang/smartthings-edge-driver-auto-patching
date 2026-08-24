@@ -48,21 +48,38 @@ def safe_identifier(value: str, *, field: str) -> str:
     return value
 
 
-def contained_path(base: Path, *parts: str) -> Path:
-    """Join ``parts`` onto ``base`` and require the result to stay inside it.
+def contained_path(root: Path, *parts: str) -> Path:
+    """Join ``parts`` onto ``root`` and require the result to stay inside it.
 
-    Both sides are resolved before comparison, so a symlink anywhere in the
-    chain is followed and then judged on where it actually lands. ``base``
-    itself may be a symlink; what is forbidden is escaping it.
+    ``root`` must be a **trusted anchor** — in practice the driver directory the
+    operator named on the command line. It is resolved once, and everything
+    reached through ``parts`` is judged against that resolved anchor.
+
+    Passing an attacker-influenced directory as ``root`` defeats the check,
+    because resolving it follows any symlink it happens to be. An earlier
+    revision did exactly that: it took ``driver_dir / "profiles"`` as the root,
+    so a driver shipping ``profiles`` as a symlink relocated the anchor itself
+    and every write under it was judged "contained". Anchor at the driver.
+
+    Symlinks among the components are refused outright rather than followed and
+    then judged. A legitimate Edge driver has no reason to ship ``profiles`` or
+    ``src`` as a link, and refusing is easier to verify than reasoning about
+    where each link lands — including the case where a link is swapped between
+    the check and the write.
     """
-    base_resolved = base.resolve()
-    candidate = base_resolved
+    root_resolved = root.resolve()
+    candidate = root_resolved
+
     for part in parts:
         candidate = candidate / part
-    candidate = candidate.resolve()
+        if candidate.is_symlink():
+            raise UnsafePathError(
+                f"refusing to follow a symlink inside the driver: {candidate}",
+            )
 
-    if candidate != base_resolved and base_resolved not in candidate.parents:
+    resolved = candidate.resolve()
+    if resolved != root_resolved and root_resolved not in resolved.parents:
         raise UnsafePathError(
-            f"refusing to write outside the driver directory: {candidate} is not under {base_resolved}",
+            f"refusing to write outside the driver directory: {resolved} is not under {root_resolved}",
         )
-    return candidate
+    return resolved

@@ -35,6 +35,19 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
+- **Unescaped model and manufacturer names corrupted generated Lua.**
+  `patch_subdriver.py` interpolated both into a driver's `PATCHED_DEVICE_MODELS`
+  table without escaping, so any legitimate value containing a double quote or
+  backslash silently produced broken Lua while the patch reported success. All
+  three sites that emit Lua now go through `auto_patch/luagen.lua_string`, which
+  escapes backslash before quote and refuses control characters.
+
+  This was investigated as a possible injection vulnerability and is not one:
+  the only party who can meet the preconditions is the driver publisher, who
+  already ships the `src/*.lua` that EdgeLoom copies through byte-identical and
+  that the hub executes at the driver's main entry point. The escaping is a
+  correctness fix.
+
 - `edgeloom validate` now reports profiles and capability maps that omit their
   required `name` or `version` key instead of silently skipping them.
 

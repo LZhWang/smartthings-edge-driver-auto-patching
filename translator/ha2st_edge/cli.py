@@ -27,6 +27,11 @@ def parse_args() -> argparse.Namespace:
         help="Comma-separated HA domains to include (default: light,switch,lock,binary_sensor)",
     )
     parser.add_argument("--output", required=True, help="Output directory for generated Edge artifacts")
+    parser.add_argument(
+        "--no-token",
+        action="store_true",
+        help="Do not write the HA token into the generated config; set HA_EDGE_TOKEN on the hub instead",
+    )
     return parser.parse_args()
 
 
@@ -45,11 +50,15 @@ def translate(
     token: str,
     output: str | Path,
     domains: str | list[str] = "light,switch,lock,binary_sensor",
+    persist_token: bool = True,
 ) -> int:
     """Fetch HA states, map them to Edge profiles, and write the artifacts.
 
     Extracted from main() so `edgeloom translate` and `python -m ha2st_edge.cli`
     drive exactly the same code path. Returns a process exit code.
+
+    The token is always required for the fetch. With ``persist_token=False`` it
+    is not written into the generated config (the hub then needs HA_EDGE_TOKEN).
     """
     if isinstance(domains, str):
         domains = [d.strip() for d in domains.split(",") if d.strip()]
@@ -82,14 +91,22 @@ def translate(
         LOG.error("No entities were mapped; nothing to generate.")
         return 1
 
-    generate_profiles_and_config(mapped, output_dir, ha_base_url=ha_url, ha_token=token)
+    generate_profiles_and_config(
+        mapped, output_dir, ha_base_url=ha_url, ha_token=token if persist_token else None
+    )
     LOG.info("Generation complete at %s", output_dir)
     return 0
 
 
 def main() -> int:
     args = parse_args()
-    return translate(ha_url=args.ha_url, token=args.token, output=args.output, domains=args.domains)
+    return translate(
+        ha_url=args.ha_url,
+        token=args.token,
+        output=args.output,
+        domains=args.domains,
+        persist_token=not args.no_token,
+    )
 
 
 if __name__ == "__main__":

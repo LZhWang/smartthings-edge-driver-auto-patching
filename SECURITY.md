@@ -50,10 +50,12 @@ That is the point of the research it accompanies, not a flaw in the tool:
 - **The translator handles Home Assistant credentials.** A long-lived access
   token is a bearer credential for your entire HA instance. Pass it via
   `HA_TOKEN` rather than on the command line, where it lands in shell history.
-  Note that the generator writes the token into the produced
-  `config/ha_devices.yaml` so the Edge driver can authenticate: treat that file
-  as a secret, keep it out of version control, and prefer the
-  `HA_EDGE_TOKEN` environment override where your deployment allows it.
+  The generator writes the token into the produced `config/ha_devices.yaml` so
+  the Edge driver can authenticate; that file is written with owner-only
+  permissions (`0600`). Prefer keeping the token out of the file entirely with
+  `translate --no-token` and supplying `HA_EDGE_TOKEN` on the hub instead —
+  treat any copy of `ha_devices.yaml` as a secret and keep it out of version
+  control.
 - **Discovery talks to the GitHub API.** Supply `GITHUB_TOKEN` for rate limits
   only; it needs no write scope.
 

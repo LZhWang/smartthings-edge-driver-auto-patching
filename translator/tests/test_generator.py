@@ -1,8 +1,51 @@
+import stat
+import sys
 from pathlib import Path
 
+import pytest
 import yaml
 from ha2st_edge.generator import generate_profiles_and_config
 from ha2st_edge.mapping import DeviceProfileSpec
+
+
+def _mapped():
+    return [
+        {
+            "state": {"entity_id": "switch.plug", "attributes": {"friendly_name": "Plug"}},
+            "profile": DeviceProfileSpec("ha_switch_basic", ["switch"], "Switch"),
+        }
+    ]
+
+
+@pytest.mark.skipif(sys.platform == "win32", reason="POSIX mode bits")
+def test_config_containing_a_token_is_owner_readable_only(tmp_path):
+    generate_profiles_and_config(_mapped(), tmp_path, ha_base_url="http://ha.local", ha_token="SECRET")
+
+    mode = stat.S_IMODE((tmp_path / "config" / "ha_devices.yaml").stat().st_mode)
+
+    assert mode == 0o600, f"credential file is {oct(mode)}, expected 0o600"
+
+
+@pytest.mark.skipif(sys.platform == "win32", reason="POSIX mode bits")
+def test_a_previously_world_readable_config_is_tightened(tmp_path):
+    config = tmp_path / "config"
+    config.mkdir()
+    stale = config / "ha_devices.yaml"
+    stale.write_text("ha_token: OLD\n", encoding="utf-8")
+    stale.chmod(0o644)
+
+    generate_profiles_and_config(_mapped(), tmp_path, ha_base_url="http://ha.local", ha_token="SECRET")
+
+    assert stat.S_IMODE(stale.stat().st_mode) == 0o600
+
+
+def test_no_token_omits_the_credential(tmp_path):
+    generate_profiles_and_config(_mapped(), tmp_path, ha_base_url="http://ha.local", ha_token=None)
+
+    written = (tmp_path / "config" / "ha_devices.yaml").read_text(encoding="utf-8")
+
+    assert "ha_token" not in written
+    assert "ha_base_url" in written
 
 
 def test_generate_profiles_and_config(tmp_path: Path):

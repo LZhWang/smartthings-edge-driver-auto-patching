@@ -22,7 +22,7 @@ def test_bare_invocation_prints_help(capsys: pytest.CaptureFixture[str]) -> None
     assert "usage: edgeloom" in capsys.readouterr().out
 
 
-@pytest.mark.parametrize("command", ["patch", "translate", "discover", "validate"])
+@pytest.mark.parametrize("command", ["patch", "restore", "translate", "discover", "validate"])
 def test_every_subcommand_is_registered(command: str, capsys: pytest.CaptureFixture[str]) -> None:
     with pytest.raises(SystemExit) as exc:
         main([command, "--help"])
@@ -191,3 +191,61 @@ def test_discover_accepts_zero_as_a_real_limit() -> None:
 
     assert build_parser().parse_args(["discover", "--limit", "0"]).limit == 0
     assert build_parser().parse_args(["discover"]).limit is None
+
+
+def test_restore_missing_driver_exits_nonzero(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """A driver with no backup must be a clean error, not a traceback."""
+    from auto_patch import restore_from_backup
+
+    tmp_root = tmp_path / "auto_patch"
+    tmp_root.mkdir()
+    monkeypatch.setattr(restore_from_backup, "SCRIPT_ROOT", tmp_root)
+
+    assert main(["restore", str(tmp_root / "zigbee-lock")]) == 1
+
+
+def test_restore_dry_run_moves_nothing(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from auto_patch import restore_from_backup
+
+    tmp_root = tmp_path / "auto_patch"
+    tmp_root.mkdir()
+    active = tmp_root / "zigbee-lock"
+    backup = tmp_root / "zigbee-lock-backup"
+    active.mkdir()
+    backup.mkdir()
+    (active / "fingerprints.yml").write_text("patched\n", encoding="utf-8")
+    (backup / "fingerprints.yml").write_text("original\n", encoding="utf-8")
+
+    monkeypatch.setattr(restore_from_backup, "SCRIPT_ROOT", tmp_root)
+
+    assert main(["restore", str(active), "--dry-run"]) == 0
+
+    assert (active / "fingerprints.yml").read_text(encoding="utf-8") == "patched\n"
+    assert (backup / "fingerprints.yml").read_text(encoding="utf-8") == "original\n"
+    patched_dirs = [p for p in tmp_root.iterdir() if p.name.startswith("zigbee-lock-patched-")]
+    assert not patched_dirs
+
+
+def test_restore_restores_the_backup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """End to end through the CLI: the backup comes back and the patched
+    tree is parked under a timestamped name, not deleted."""
+    from auto_patch import restore_from_backup
+
+    tmp_root = tmp_path / "auto_patch"
+    tmp_root.mkdir()
+    active = tmp_root / "zigbee-lock"
+    backup = tmp_root / "zigbee-lock-backup"
+    active.mkdir()
+    backup.mkdir()
+    (active / "fingerprints.yml").write_text("patched\n", encoding="utf-8")
+    (backup / "fingerprints.yml").write_text("original\n", encoding="utf-8")
+
+    monkeypatch.setattr(restore_from_backup, "SCRIPT_ROOT", tmp_root)
+
+    assert main(["restore", str(active)]) == 0
+
+    assert (active / "fingerprints.yml").read_text(encoding="utf-8") == "original\n"
+    assert not backup.exists()
+    patched_dirs = [p for p in tmp_root.iterdir() if p.name.startswith("zigbee-lock-patched-")]
+    assert len(patched_dirs) == 1
+    assert (patched_dirs[0] / "fingerprints.yml").read_text(encoding="utf-8") == "patched\n"

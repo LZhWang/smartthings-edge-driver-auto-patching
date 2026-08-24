@@ -13,6 +13,8 @@ from pathlib import Path
 import requests
 import yaml
 
+from edgeloom.argtypes import non_negative_int
+
 LOGGER = logging.getLogger("edge_patcher.discovery")
 GITHUB_API_URL = "https://api.github.com"
 # Upstream nests by vendor: drivers/{ABB,Aqara,DeepSmart,SinuxSoft,SmartThings,
@@ -100,7 +102,7 @@ def discover_from_github(
     fingerprints: list[DriverFingerprint] = []
     processed = 0
     for driver_name in driver_names:
-        if limit and processed >= limit:
+        if limit is not None and processed >= limit:
             break
         fp_path = f"{subpath.strip('/')}/{driver_name}/fingerprints.yml"
         data = fetch_remote_yaml(repo, branch, fp_path, timeout)
@@ -118,6 +120,10 @@ def discover_from_local(base_dir: Path, subpath: str, limit: int | None) -> list
     fingerprints: list[DriverFingerprint] = []
     processed = 0
     for driver_dir in sorted(target_dir.iterdir()):
+        # Checked before any work, matching discover_from_github, so that a
+        # limit of 0 processes nothing instead of the first driver.
+        if limit is not None and processed >= limit:
+            break
         if driver_dir.is_dir():
             fp_file = driver_dir / "fingerprints.yml"
             if not fp_file.exists():
@@ -125,8 +131,6 @@ def discover_from_local(base_dir: Path, subpath: str, limit: int | None) -> list
             data = load_yaml(fp_file)
             fingerprints.extend(parse_fingerprints(driver_dir.name, data))
             processed += 1
-            if limit and processed >= limit:
-                break
     return fingerprints
 
 
@@ -212,7 +216,11 @@ def parse_args() -> argparse.Namespace:
         help="Catalog output path",
     )
     parser.add_argument("--format", choices=["json", "yaml"], default="json", help="Output format")
-    parser.add_argument("--limit", type=int, help="Limit number of fingerprints processed")
+    parser.add_argument(
+        "--limit",
+        type=non_negative_int,
+        help="Stop after this many drivers (0 processes none; omit for no limit)",
+    )
     parser.add_argument("--timeout", type=float, default=15.0, help="Request timeout in seconds")
     parser.add_argument(
         "--cap-config",

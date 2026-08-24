@@ -38,6 +38,37 @@ Out of scope: vulnerabilities in SmartThings, Home Assistant, or vendor
 firmware, which should go to those vendors; and the intended behaviour described
 below.
 
+## What EdgeLoom trusts
+
+This section exists because an outside reporter found that it was missing, and
+because getting it wrong produced a real vulnerability (GHSA-4f7m-wgh7-46xf).
+
+**A driver you point EdgeLoom at is untrusted input.** Its `fingerprints.yml`,
+its `profiles/*.yml`, its `src/*.lua`, and its directory structure — including
+whether any of those are symlinks — are authored by whoever published that
+driver. EdgeLoom's whole premise is patching a driver obtained from elsewhere,
+so this is the primary path, not an unusual one. Values read out of a driver
+never become filesystem paths, generated code, or unbounded work without a
+check. Findings here are in scope and should be reported privately.
+
+**A driver's own Lua is not vetted.** EdgeLoom copies `src/*.lua` through
+byte-identical and the hub executes it. A malicious driver already runs
+arbitrary Lua on your hub whether or not you patch it; EdgeLoom neither adds to
+nor mitigates that. Review a driver before installing it, exactly as you would
+without this tool. This is a limit of the tool, not a vulnerability in it.
+
+**Remote responses are untrusted.** `discover` reads whatever repository you
+point it at, and the translator reads whatever your Home Assistant instance
+returns. Neither is assumed well-formed or well-intentioned.
+
+**The operator is trusted.** Command-line arguments, `--config` files, and the
+`--output` path are the operator's own. A finding whose only attacker is the
+person running the tool on their own machine is a robustness bug, not a
+vulnerability — they can edit the driver directly.
+
+**The hub and the SmartThings account are out of scope.** EdgeLoom never
+packages or installs anything; you do that separately.
+
 ## What this tool does by design
 
 EdgeLoom exists to make device attributes visible that a stock driver hides.

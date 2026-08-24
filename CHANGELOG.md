@@ -7,6 +7,25 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Security
+
+- **Bounded documents parsed from untrusted sources.** `yaml.safe_load` stores
+  aliases as shared references, so a driver file with nested anchors parsed
+  cheaply and only became expensive in whatever walked it — `jsonschema` in
+  `edgeloom validate`, `json.dumps` in `edgeloom discover`. A 420-byte profile
+  drove validate to multi-gigabyte RSS, and a 483-byte `fingerprints.yml`
+  produced a 200 MB catalog. Both now measure the expansion before walking it,
+  memoised per object identity so the check costs the document's distinct nodes
+  rather than the expansion it describes, and report a diagnostic instead.
+  Closes #44 and #45. `load_document` also reports non-UTF-8 and
+  over-deep documents instead of raising a traceback.
+
+### Changed
+
+- `SECURITY.md` now states what EdgeLoom trusts. The absence of that section is
+  what made GHSA-4f7m-wgh7-46xf possible to misjudge: a driver's own files are
+  attacker-controlled on the primary path, and the document did not say so.
+
 ### Fixed
 
 - `discover --limit N` now counts drivers that actually yield fingerprints.

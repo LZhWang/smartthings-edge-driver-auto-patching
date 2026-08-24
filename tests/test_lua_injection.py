@@ -1,14 +1,14 @@
-"""Regression tests for values interpolated into hub-executed Lua.
+"""Regression tests for values interpolated into generated Lua.
 
-`patch_subdriver` rewrites Lua that a SmartThings hub runs at driver load time.
-A device model carrying a double quote used to terminate its own string literal
-and land arbitrary Lua in that module — a code sink, not a data sink.
+`patch_subdriver` writes a device model and manufacturer into a driver's
+`PATCHED_DEVICE_MODELS` table. Interpolated raw, a value containing a double
+quote terminates its own string literal and the emitted Lua is wrong — while the
+patch still reports success.
 
-The model is matched against the driver's own `fingerprints.yml`, so an operator
-copies it out of a file authored by whoever published the driver. Arriving as a
-command-line argument does not make it operator-chosen.
-
-Found during the audit that followed the `deviceProfileName` report.
+These are correctness tests, not security tests. The injection was investigated
+as a vulnerability and refuted: only the driver publisher can meet the
+preconditions, and they already ship the driver's own `src/*.lua` untouched
+through EdgeLoom. The name of this file is kept for the searchable term.
 """
 
 from __future__ import annotations

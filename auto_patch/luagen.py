@@ -1,19 +1,22 @@
 """Safe construction of the Lua fragments the patcher writes into a driver.
 
-`patch_subdriver` edits Lua source that a SmartThings hub executes at driver
-load time. Any value interpolated into that source is therefore reaching a code
-sink, not a data sink, and the consequence of getting it wrong is worse than a
-stray file: attacker-chosen Lua running in a driver that operates the user's
-locks.
+`patch_subdriver` edits Lua source, and interpolating a raw string into it means
+any value containing a double quote or backslash silently produces broken Lua
+while the patch reports success. That is the bug this module exists to prevent:
+a correctness one.
 
-The values that land there — a device model and manufacturer — are matched
-against the driver's own `fingerprints.yml`, so in practice an operator copies
-them out of a file authored by whoever published that driver. Treating them as
-trusted because they arrived as command-line arguments confuses "the operator
-typed it" with "the operator chose it".
+It is deliberately *not* framed as a security boundary. This was investigated as
+a possible injection vulnerability and the threat model does not hold: the only
+party who can get a crafted value this far is the driver publisher, and they
+already ship every `src/*.lua` in the driver — EdgeLoom copies those through
+byte-identical, with no vetting, and the hub executes them at the driver's main
+entry point. An injected subdriver line is a strictly less privileged, strictly
+more expensive route to something the publisher already has. The operator's own
+`--model` argument is documented as coming from the SmartThings Advanced Web App
+(`docs/patching.md`), not from driver files.
 
-Found during the audit that followed the `deviceProfileName` report in
-`SECURITY.md`; see also `auto_patch/paths.py` for the filesystem counterpart.
+Escaping is still correct to do, and cheap. See `auto_patch/paths.py` for the
+filesystem counterpart, which *is* a security boundary.
 """
 
 from __future__ import annotations

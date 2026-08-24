@@ -9,18 +9,6 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Security
 
-- **Lua injection through device model and manufacturer names.**
-  `patch_subdriver.py` interpolated the model and manufacturer into the
-  `PATCHED_DEVICE_MODELS` table of a driver module without escaping. A model
-  containing a double quote terminated its own Lua string literal and placed
-  attacker-chosen Lua into a module the hub executes at driver load time. Those
-  values are matched against the driver's own `fingerprints.yml`, so an operator
-  copies them out of a file authored by whoever published that driver; arriving
-  as a command-line argument did not make them operator-chosen. All three sites
-  that emit Lua now escape through `auto_patch/luagen.lua_string`, which escapes
-  backslash before quote and refuses control characters. Found in the audit that
-  followed the `deviceProfileName` report.
-
 - **Path containment for driver-supplied profile names.** A driver's
   `fingerprints.yml` is authored by whoever published that driver, and
   `patch_profiles.py` used its `deviceProfileName` to build filesystem paths
@@ -33,6 +21,19 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   `SECURITY.md`, answering question 3 of #31.
 
 ### Fixed
+
+- **Unescaped model and manufacturer names corrupted generated Lua.**
+  `patch_subdriver.py` interpolated both into a driver's `PATCHED_DEVICE_MODELS`
+  table without escaping, so any legitimate value containing a double quote or
+  backslash silently produced broken Lua while the patch reported success. All
+  three sites that emit Lua now go through `auto_patch/luagen.lua_string`, which
+  escapes backslash before quote and refuses control characters.
+
+  This was investigated as a possible injection vulnerability and is not one:
+  the only party who can meet the preconditions is the driver publisher, who
+  already ships the `src/*.lua` that EdgeLoom copies through byte-identical and
+  that the hub executes at the driver's main entry point. The escaping is a
+  correctness fix.
 
 - `edgeloom validate` now reports profiles and capability maps that omit their
   required `name` or `version` key instead of silently skipping them.

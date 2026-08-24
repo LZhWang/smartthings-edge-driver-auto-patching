@@ -7,6 +7,19 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Security
+
+- **Path containment for driver-supplied profile names.** A driver's
+  `fingerprints.yml` is authored by whoever published that driver, and
+  `patch_profiles.py` used its `deviceProfileName` to build filesystem paths
+  without validating it. A name carrying parent components or an absolute path
+  caused the generated profile to be written outside the driver directory, and
+  could silently overwrite an existing file whose name ended in `-patch.yml`.
+  The value is now required to be a bare identifier, and the resolved
+  destination is re-checked against the driver's `profiles/` directory at the
+  write boundary. Reported by Marcos Maia Jr. through the process in
+  `SECURITY.md`, answering question 3 of #31.
+
 ### Fixed
 
 - `edgeloom validate` now reports profiles and capability maps that omit their

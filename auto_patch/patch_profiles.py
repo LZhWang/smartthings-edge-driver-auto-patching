@@ -9,6 +9,11 @@ from pathlib import Path
 
 import yaml
 
+try:  # imported as a package by edgeloom.patching and the test suite
+    from auto_patch.paths import contained_path, safe_identifier
+except ImportError:  # executed directly: python auto_patch/patch_profiles.py
+    from paths import contained_path, safe_identifier
+
 LOGGER = logging.getLogger("edge_patcher.patch_profiles")
 SCRIPT_ROOT = Path(__file__).resolve().parent
 DEFAULT_CAPABILITY_CONFIG = SCRIPT_ROOT / "custom_capability_list.config"
@@ -62,7 +67,9 @@ def patch_fingerprints(devices: Iterable[dict], model: str, manufacturer: str | 
         if manufacturer and device.get("manufacturer") and device["manufacturer"] != manufacturer:
             continue
         if device.get("model") == model:
-            profile_name = device["deviceProfileName"]
+            # Authored by whoever published the driver, and it becomes a
+            # filesystem path below. Validate before it can do so.
+            profile_name = safe_identifier(device["deviceProfileName"], field="deviceProfileName")
             device["deviceProfileName"] = f"{profile_name}-patch"
             LOGGER.debug(
                 "Patched fingerprint for %s/%s -> %s",
@@ -148,8 +155,12 @@ def patch_profiles(
         write_yaml(fingerprints_path, fingerprints)
         LOGGER.info("Patched fingerprints saved to %s", fingerprints_path)
 
-    original_profile_path = driver_dir / "profiles" / f"{profile_name}.yml"
-    patched_profile_path = driver_dir / "profiles" / f"{profile_name}-patch.yml"
+    # Contain against profiles/ rather than the driver root: a name that
+    # climbs out of profiles/ but stays inside the driver is still not a
+    # profile path, and should not be written.
+    profiles_dir = driver_dir / "profiles"
+    original_profile_path = contained_path(profiles_dir, f"{profile_name}.yml")
+    patched_profile_path = contained_path(profiles_dir, f"{profile_name}-patch.yml")
     create_new_profile(original_profile_path, patched_profile_path, custom_capabilities, dry_run)
 
     return profile_name

@@ -6,6 +6,11 @@ import shutil
 import sys
 from pathlib import Path
 
+try:  # imported as a package by edgeloom.patching and the test suite
+    from auto_patch.luagen import lua_string
+except ImportError:  # executed directly: python auto_patch/patch_subdriver.py
+    from luagen import lua_string
+
 LOGGER = logging.getLogger("edge_patcher.patch_subdriver")
 SCRIPT_ROOT = Path(__file__).resolve().parent
 DEFAULT_DRIVER_CONFIG = SCRIPT_ROOT / "driver2patch.config"
@@ -63,7 +68,11 @@ def add_device_model(subdriver_path: Path, manufacturer: str, model: str, dry_ru
         raise ValueError("Unable to locate PATCHED_DEVICE_MODELS block")
 
     block = match.group(0)
-    new_model_line = f'    {{ mfr = "{manufacturer}", model = "{model}" }},'
+    # Reaches Lua that the hub executes; escape rather than interpolate.
+    new_model_line = (
+        f"    {{ mfr = {lua_string(manufacturer, field='manufacturer')}, "
+        f"model = {lua_string(model, field='model')} }},"
+    )
     if new_model_line in block:
         LOGGER.info("[Step 3] model already present in patch list")
         return
@@ -90,7 +99,11 @@ def construct_new_subdrivers_block(existing_block: str, new_driver: str) -> str:
     closing_indent_match = re.match(r"\s*", lines[-1]) if lines else None
     closing_indent = closing_indent_match.group(0) if closing_indent_match else ""
 
-    new_lines = [lines[0]] + [f'{indent}require("{drv}"),' for drv in drivers] + [f"{closing_indent}}}"]
+    new_lines = (
+        [lines[0]]
+        + [f"{indent}require({lua_string(drv, field='subdriver')})," for drv in drivers]
+        + [f"{closing_indent}}}"]
+    )
     return "\n".join(new_lines)
 
 
@@ -113,7 +126,9 @@ def update_parent_driver_template(driver_dir: Path, subdriver: str, dry_run: boo
             raise ValueError("Could not locate driver template to inject subdriver")
         template_block = template_match.group(0).splitlines()
         indent = len(template_block[1]) - len(template_block[1].lstrip())
-        injection = " " * indent + f'sub_drivers = {{ require("{subdriver}") }},'
+        injection = " " * indent + (
+            f"sub_drivers = {{ require({lua_string(subdriver, field='subdriver')}) }},"
+        )
         new_template_block = "\n".join([template_block[0], injection, *template_block[1:]])
         updated_code = code.replace(template_match.group(0), new_template_block, 1)
 

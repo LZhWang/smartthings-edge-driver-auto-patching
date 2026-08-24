@@ -1,0 +1,97 @@
+# EdgeLoom binding lexicon, v0.1 — door locks.
+#
+# Maps a neutral term to its ZCL/Matter definition and to the Z-Wave
+# Configuration CC parameter labels that carry the same concept.
+#
+# Terms are keyed on (cluster, attribute), never on a name: Matter has two
+# distinct attributes called OperatingMode with the same type name
+# (Door Lock 0x0101/0x25 and ICD Management 0x0046/0x08) and unrelated
+# semantics, so name-joins are unsound.
+#
+# `primary` labels ARE the term. `related` labels share vocabulary but denote a
+# different concept, and are recorded so a scorer can tell "no binding" from
+# "a neighbouring binding". Where a label genuinely could be either, it is
+# listed as primary in both terms — that produces an AMBIGUOUS score, which is
+# the honest outcome rather than a hidden judgement call.
+#
+# Z-Wave labels below were extracted from zwave-js (MIT) for the 44 lock
+# products reachable from SmartThings' zwave-lock fingerprints. They are
+# observed strings, not invented ones.
+
+version: "0.1"
+device_class: door-lock
+
+terms:
+  Language:
+    zcl: { cluster: 0x0101, attribute: 0x0021, type: string, unit: null }
+    semantics: "Language for the lock's audible and display output."
+    zwave:
+      primary: ["Language"]
+      related: []
+
+  AutoRelockTime:
+    zcl: { cluster: 0x0101, attribute: 0x0023, type: uint32, unit: seconds }
+    semantics: "Delay after which the lock automatically re-secures itself."
+    zwave:
+      primary: ["Auto Relock Time"]
+      # These are boolean enables or read-only readbacks, not the duration.
+      # ZCL folds enable-vs-duration into one attribute (0 disables); Z-Wave
+      # splits them. That split is a fidelity loss, not an ambiguity.
+      related:
+        - "Auto Relock"
+        - "Auto Lock"
+        - "Lock & Leave"
+        - "Lock and Leave Mode"
+        - "Dipswitch setting: Autolock"
+
+  SoundVolume:
+    zcl: { cluster: 0x0101, attribute: 0x0024, type: uint8, unit: null }
+    semantics: "Audible feedback level."
+    zwave:
+      primary: ["Volume", "Beeper"]
+      related: ["Dipswitch setting: Buzzer"]
+
+  OperatingMode:
+    zcl: { cluster: 0x0101, attribute: 0x0025, type: enum8, unit: null }
+    semantics: "Which control interfaces are enabled (normal/vacation/privacy/passage)."
+    zwave:
+      primary: ["Operating Mode"]
+      # Vacation Mode is ONE value of the ZCL enum exposed as its own boolean.
+      related: ["Vacation Mode"]
+
+  EnableOneTouchLocking:
+    zcl: { cluster: 0x0101, attribute: 0x0029, type: bool, unit: null }
+    semantics: "Whether the lock secures on a single touch without a credential."
+    zwave:
+      primary: ["One Touch Locking"]
+      related: ["Lock & Leave", "Lock and Leave Mode"]
+
+  EnableInsideStatusLED:
+    zcl: { cluster: 0x0101, attribute: 0x002A, type: bool, unit: null }
+    semantics: "Whether the interior status LED is lit."
+    zwave:
+      primary: ["Lock Status LED"]
+      # Read-only dipswitch readback: ZCL's analogue is
+      # DefaultConfigurationRegister 0x0027, not this attribute.
+      related: ["Dipswitch setting: Lock Status LED"]
+
+  EnablePrivacyModeButton:
+    zcl: { cluster: 0x0101, attribute: 0x002B, type: bool, unit: null }
+    semantics: "Whether the physical privacy button is active."
+    zwave:
+      primary: ["Privacy Button"]
+      related: []
+
+  WrongCodeEntryLimit:
+    zcl: { cluster: 0x0101, attribute: 0x0030, type: uint8, unit: null }
+    semantics: "Failed credential attempts tolerated before lockout."
+    zwave:
+      primary: ["Wrong Code Limit"]
+      related: []
+
+  UserCodeTemporaryDisableTime:
+    zcl: { cluster: 0x0101, attribute: 0x0031, type: uint8, unit: seconds }
+    semantics: "How long credentials stay disabled after the wrong-code limit trips."
+    zwave:
+      primary: ["Wrong Code Lockout Time"]
+      related: []

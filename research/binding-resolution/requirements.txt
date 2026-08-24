@@ -1,0 +1,5 @@
+# The measurement needs a JSON5 reader because zwave-js device configs carry
+# comments and trailing commas. Deliberately not a dependency of the edgeloom
+# package itself — this is a research artifact, not shipped code.
+json5>=0.9
+PyYAML>=6.0

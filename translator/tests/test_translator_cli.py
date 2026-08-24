@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 from ha2st_edge import cli
@@ -26,6 +27,10 @@ def test_filter_entities_keeps_selected_domains_and_drops_malformed_ids():
     ]
 
     assert cli.filter_entities(states, ["light", "switch"]) == states[:2]
+
+    # Naming the malformed id as a domain is what pins the dotless guard: without
+    # it, "malformed".split(".", 1)[0] is "malformed" and this entity is kept.
+    assert cli.filter_entities([{"entity_id": "malformed"}], ["malformed"]) == []
 
 
 def test_translate_returns_one_without_writes_when_client_fails(monkeypatch, tmp_path):
@@ -85,3 +90,20 @@ def test_translate_accepts_equivalent_string_and_list_domains(monkeypatch, tmp_p
         }
 
     assert generated_files(string_output) == generated_files(list_output)
+
+
+def test_translate_splits_string_domains_instead_of_substring_matching(monkeypatch, tmp_path, caplog):
+    """A domain must match a whole entry, not appear anywhere in the raw string.
+
+    Without the split in translate(), `domain in domains` is a substring test:
+    "sensor" is inside "binary_sensor,light", so a sensor entity would survive
+    a filter that never named its domain.
+    """
+    install_client_stub(monkeypatch, states=[{"entity_id": "sensor.temperature", "attributes": {}}])
+
+    with caplog.at_level(logging.DEBUG, logger=cli.LOG.name):
+        assert cli.translate("http://ha.local:8123", "token", tmp_path, domains="binary_sensor,light") == 1
+
+    assert "Filtered to 0 entities" in caplog.text
+    assert "no mapping" not in caplog.text
+    assert list(tmp_path.iterdir()) == []

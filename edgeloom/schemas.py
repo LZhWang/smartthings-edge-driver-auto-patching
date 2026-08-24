@@ -9,6 +9,8 @@ from typing import Any
 
 import yaml
 
+from edgeloom.boundedyaml import DocumentTooLargeError, check_bounds
+
 SCHEMA_VERSION = "0.1"
 
 PROFILE = "profile"
@@ -57,13 +59,25 @@ def load_document(path: Path) -> Any:
     """Read a YAML or JSON document from disk."""
     if path.suffix.lower() not in DOCUMENT_SUFFIXES:
         raise SchemaError(f"Unsupported document type {path.suffix!r}: {path}")
-    text = path.read_text(encoding="utf-8")
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError as exc:
+        raise SchemaError(f"{path}: is not valid UTF-8: {exc}") from exc
     try:
         if path.suffix.lower() in _JSON_SUFFIXES:
-            return json.loads(text)
-        return yaml.safe_load(text)
+            document = json.loads(text)
+        else:
+            document = yaml.safe_load(text)
     except (json.JSONDecodeError, yaml.YAMLError) as exc:
         raise SchemaError(f"{path}: could not be parsed: {exc}") from exc
+    except RecursionError as exc:
+        # Both parsers recurse; a deeply nested document exhausts the stack
+        # before the bounds check below can see it.
+        raise SchemaError(f"{path}: nests too deeply to parse") from exc
+    try:
+        return check_bounds(document)
+    except DocumentTooLargeError as exc:
+        raise SchemaError(f"{path}: {exc}") from exc
 
 
 def detect_kind(document: Any) -> str | None:

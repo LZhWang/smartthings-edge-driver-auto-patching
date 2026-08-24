@@ -14,6 +14,7 @@ import requests
 import yaml
 
 from edgeloom.argtypes import non_negative_int
+from edgeloom.boundedyaml import check_bounds
 
 LOGGER = logging.getLogger("edge_patcher.discovery")
 GITHUB_API_URL = "https://api.github.com"
@@ -56,7 +57,7 @@ def parse_fingerprints(driver_name: str, fingerprint_data: dict) -> list[DriverF
 
 def load_yaml(path: Path) -> dict:
     with path.open("r", encoding="utf-8") as handle:
-        return yaml.safe_load(handle) or {}
+        return check_bounds(yaml.safe_load(handle) or {})
 
 
 def fetch_remote_directory(
@@ -87,7 +88,7 @@ def fetch_remote_yaml(repo: str, branch: str, path: str, timeout: float) -> dict
     if response.status_code != 200:
         LOGGER.debug("Skipping %s (HTTP %s)", path, response.status_code)
         return None
-    return yaml.safe_load(response.text) or {}
+    return check_bounds(yaml.safe_load(response.text) or {})
 
 
 def discover_from_github(

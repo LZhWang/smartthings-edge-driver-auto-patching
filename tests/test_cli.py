@@ -70,6 +70,32 @@ def test_translate_requires_a_token(monkeypatch: pytest.MonkeyPatch, tmp_path: P
     assert main(["translate", "--ha-url", "http://ha.local", "--output", str(tmp_path)]) == 1
 
 
+def test_translate_no_token_is_accepted_and_not_persisted(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """`--no-token` still requires a token for the fetch, but must not write
+    it into the generated config (issue #33)."""
+    from edgeloom.cli import build_parser
+
+    args = build_parser().parse_args(
+        ["translate", "--ha-url", "http://ha.local", "--output", "/dev/null", "--no-token"]
+    )
+    assert args.no_token is True
+
+    captured = {}
+
+    def fake_translate(**kwargs):
+        captured.update(kwargs)
+        return 0
+
+    monkeypatch.setattr("ha2st_edge.cli.translate", fake_translate)
+    exit_code = main(
+        ["translate", "--ha-url", "http://ha.local", "--token", "T", "--output", str(tmp_path), "--no-token"]
+    )
+    assert exit_code == 0
+    assert captured["persist_token"] is False
+
+
 def test_discover_requires_local_dir_for_local_source(tmp_path: Path) -> None:
     assert main(["discover", "--source", "local", "--output", str(tmp_path / "c.json")]) == 1
 

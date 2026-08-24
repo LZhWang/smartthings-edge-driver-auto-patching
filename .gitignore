@@ -10,3 +10,6 @@ dist/
 venv/
 discovery/catalog*.json
 discovery/catalog*.yaml
+generated_edge/
+ha_devices.yaml
+*-backup/

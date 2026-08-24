@@ -52,6 +52,15 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - `edgeloom validate` now reports profiles and capability maps that omit their
   required `name` or `version` key instead of silently skipping them.
+- The translator now writes `config/ha_devices.yaml` with owner-only
+  permissions (`0600`) when it contains the Home Assistant token, and a
+  previously world-readable file is tightened on overwrite.
+
+### Added
+
+- `translate --no-token` (both the `edgeloom` and `ha2st_edge` CLIs) keeps the
+  Home Assistant token out of the generated config; supply `HA_EDGE_TOKEN` on
+  the hub instead.
 
 ## [0.1.0] - 2026-08-23
 

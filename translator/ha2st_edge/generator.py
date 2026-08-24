@@ -1,3 +1,5 @@
+import logging
+import os
 from pathlib import Path
 from typing import Any
 
@@ -5,9 +7,25 @@ import yaml
 
 from .mapping import DeviceProfileSpec
 
+LOG = logging.getLogger("ha2st_edge.generator")
+
 
 def _profile_filename(profile_name: str) -> str:
     return f"{profile_name}.yaml"
+
+
+def _write_secret_yaml(path: Path, payload: dict[str, Any]) -> None:
+    """Write YAML containing a credential, readable only by its owner.
+
+    The mode is passed to os.open rather than applied with chmod afterwards, so
+    the file is never briefly world-readable. fchmod covers the case where the
+    file already existed with looser permissions from an earlier run.
+    """
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, "w", encoding="utf-8") as handle:
+        if hasattr(os, "fchmod"):  # POSIX only; Windows has no mode bits here
+            os.fchmod(handle.fileno(), 0o600)
+        yaml.safe_dump(payload, handle, sort_keys=False)
 
 
 def _render_profile_yaml(spec: DeviceProfileSpec) -> dict[str, Any]:
@@ -58,7 +76,16 @@ def generate_profiles_and_config(
         )
 
     config_payload = {"ha_base_url": ha_base_url, "devices": devices_payload}
+    config_path = config_dir / "ha_devices.yaml"
     if ha_token:
         config_payload["ha_token"] = ha_token
-    with (config_dir / "ha_devices.yaml").open("w", encoding="utf-8") as f:
-        yaml.safe_dump(config_payload, f, sort_keys=False)
+        _write_secret_yaml(config_path, config_payload)
+        LOG.warning(
+            "%s contains your Home Assistant token. It is written owner-readable "
+            "only; keep it out of version control. Pass --no-token to omit it and "
+            "supply HA_EDGE_TOKEN on the hub instead.",
+            config_path,
+        )
+    else:
+        with config_path.open("w", encoding="utf-8") as handle:
+            yaml.safe_dump(config_payload, handle, sort_keys=False)

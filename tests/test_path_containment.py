@@ -11,6 +11,8 @@ execute `contained_path` and the write-boundary guard would go unverified.
 
 from __future__ import annotations
 
+import shutil
+
 import pytest
 import yaml
 
@@ -50,37 +52,59 @@ def test_safe_identifier_rejects_degenerate_names(value: str) -> None:
 
 
 def test_contained_path_allows_a_child(tmp_path) -> None:
-    profiles = tmp_path / "profiles"
-    profiles.mkdir()
-    assert contained_path(profiles, "ok.yml") == profiles / "ok.yml"
+    (tmp_path / "profiles").mkdir()
+    assert contained_path(tmp_path, "profiles", "ok.yml") == tmp_path / "profiles" / "ok.yml"
 
 
-@pytest.mark.parametrize("part", ["../escape.yml", "/tmp/absolute.yml"])
+@pytest.mark.parametrize("part", ["../../escape.yml", "/tmp/absolute.yml"])
 def test_contained_path_rejects_an_escape(tmp_path, part: str) -> None:
-    profiles = tmp_path / "profiles"
-    profiles.mkdir()
+    (tmp_path / "profiles").mkdir()
     with pytest.raises(UnsafePathError):
-        contained_path(profiles, part)
+        contained_path(tmp_path, "profiles", part)
 
 
-def test_contained_path_follows_symlinks_before_judging(tmp_path) -> None:
-    """A symlinked profiles/ pointing outside the driver must not pass."""
+def test_contained_path_allows_a_parent_hop_that_stays_inside(tmp_path) -> None:
+    """Documents the layering rather than asserting a security property.
+
+    ``profiles/../x.yml`` lands inside the driver, so this layer — whose job is
+    "do not leave the driver" — permits it. Names like that never reach here in
+    practice: ``safe_identifier`` rejects parent components and separators
+    before a path is built. Anchoring tighter, on ``profiles/`` itself, is what
+    made a symlinked ``profiles`` relocate the anchor.
+    """
+    (tmp_path / "profiles").mkdir()
+    assert contained_path(tmp_path, "profiles", "../x.yml") == tmp_path / "x.yml"
+
+
+@pytest.mark.parametrize("linked", ["profiles", "src"])
+def test_contained_path_refuses_a_symlinked_component(tmp_path, linked: str) -> None:
+    """The bypass that defeated the first version of this guard.
+
+    Anchoring on ``driver/profiles`` resolved that symlink and made the outside
+    directory the containment base, so every write under it passed. The call
+    shape here is the one the patcher actually uses: anchor on the driver, pass
+    the subdirectory as a component.
+    """
     driver = tmp_path / "driver"
     driver.mkdir()
     outside = tmp_path / "outside"
     outside.mkdir()
-    (driver / "profiles").symlink_to(outside, target_is_directory=True)
+    (driver / linked).symlink_to(outside, target_is_directory=True)
 
     with pytest.raises(UnsafePathError):
-        contained_path(driver, "profiles", "x.yml")
+        contained_path(driver, linked, "x.yml")
 
 
-def test_contained_path_rejects_climbing_out_of_profiles(tmp_path) -> None:
-    """Inside the driver but outside profiles/ is still not a profile path."""
-    profiles = tmp_path / "profiles"
-    profiles.mkdir()
+def test_contained_path_refuses_a_symlinked_leaf(tmp_path) -> None:
+    """A single linked file is the realistic shape: the tree looks normal."""
+    driver = tmp_path / "driver"
+    (driver / "src").mkdir(parents=True)
+    outside = tmp_path / "outside.lua"
+    outside.write_text("original", encoding="utf-8")
+    (driver / "src" / "init.lua").symlink_to(outside)
+
     with pytest.raises(UnsafePathError):
-        contained_path(profiles, "../sneaky.yml")
+        contained_path(driver, "src", "init.lua")
 
 
 # --- end to end: the reported reproduction ---------------------------------
@@ -131,3 +155,25 @@ def test_patch_profiles_still_patches_a_legitimate_driver(driver_copy, capabilit
         == "base-lock"
     )
     assert (driver_copy / "profiles" / "base-lock-patch.yml").is_file()
+
+
+def test_patch_refuses_a_driver_with_a_symlinked_profiles(driver_copy, capability_config, tmp_path):
+    """End to end: the bypass reproduced through the real patch entry point.
+
+    A unit test alone would not have caught this. The first version of the guard
+    passed its own symlink test while the patcher, which called it differently,
+    was wide open.
+    """
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    (outside / "base-lock.yml").write_text(
+        (driver_copy / "profiles" / "base-lock.yml").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    shutil.rmtree(driver_copy / "profiles")
+    (driver_copy / "profiles").symlink_to(outside, target_is_directory=True)
+
+    with pytest.raises(UnsafePathError):
+        patch_profiles(str(driver_copy), "YRD226 TSDB", "Yale", "ALL", config_path=capability_config)
+
+    assert not (outside / "base-lock-patch.yml").exists()

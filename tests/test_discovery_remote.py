@@ -52,6 +52,12 @@ def _fingerprint_document(model: str) -> str:
     )
 
 
+def _matter_document(model: str) -> str:
+    """A fingerprints.yml with no ``zigbeeManufacturer`` key: fetchable, but it
+    yields zero Zigbee fingerprints, so it must not count against ``--limit``."""
+    return yaml.safe_dump({"matterGeneric": [{"model": model}]})
+
+
 @pytest.mark.parametrize("token", [None, "test-token"])
 def test_fetch_remote_directory_filters_and_sends_expected_request(
     monkeypatch: pytest.MonkeyPatch, token: str | None
@@ -167,6 +173,52 @@ def test_discover_from_github_zero_limit_processes_all_drivers(
 
     assert [item.driver for item in result] == ["alpha", "beta"]
     assert len(calls) == 3
+
+
+def test_discover_from_github_limit_counts_drivers_with_fingerprints(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A Matter-shaped fingerprints.yml (fetchable, zero Zigbee entries) must
+    not consume the limit, or ``--limit 2`` against SmartThings returns nothing
+    because the alphabetically-first drivers with a fingerprints.yml are Matter."""
+    api_url = "https://api.github.com/repos/acme/drivers/contents/drivers"
+    raw_root = "https://raw.githubusercontent.com/acme/drivers/main/drivers"
+    routes = {
+        api_url: FakeResponse(
+            200,
+            payload=[
+                {"name": name, "type": "dir"}
+                for name in ["matter-appliance", "matter-lock", "zigbee-a", "zigbee-b"]
+            ],
+        ),
+        f"{raw_root}/matter-appliance/fingerprints.yml": FakeResponse(200, text=_matter_document("M1")),
+        f"{raw_root}/matter-lock/fingerprints.yml": FakeResponse(200, text=_matter_document("M2")),
+        f"{raw_root}/zigbee-a/fingerprints.yml": FakeResponse(200, text=_fingerprint_document("A1")),
+        f"{raw_root}/zigbee-b/fingerprints.yml": FakeResponse(200, text=_fingerprint_document("B2")),
+    }
+    _install_fake_get(monkeypatch, routes)
+
+    result = discover_drivers.discover_from_github("acme/drivers", "main", "drivers", None, 2, 3)
+
+    assert [item.driver for item in result] == ["zigbee-a", "zigbee-b"]
+
+
+def test_discover_from_local_limit_counts_drivers_with_fingerprints(tmp_path: Path) -> None:
+    """The local path keeps the same accounting as the GitHub path."""
+    base = tmp_path / "drivers"
+    for name, document in [
+        ("matter-appliance", _matter_document("M1")),
+        ("matter-lock", _matter_document("M2")),
+        ("zigbee-a", _fingerprint_document("A1")),
+        ("zigbee-b", _fingerprint_document("B2")),
+    ]:
+        driver_dir = base / name
+        driver_dir.mkdir(parents=True)
+        (driver_dir / "fingerprints.yml").write_text(document, encoding="utf-8")
+
+    result = discover_drivers.discover_from_local(tmp_path, "drivers", 2)
+
+    assert [item.driver for item in result] == ["zigbee-a", "zigbee-b"]
 
 
 def test_parse_fingerprints_maps_public_fields_and_ignores_other_shapes() -> None:

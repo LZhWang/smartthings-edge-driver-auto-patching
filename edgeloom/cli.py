@@ -10,6 +10,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from edgeloom import __version__, schemas
+from edgeloom.argtypes import non_negative_int
 
 LOGGER = logging.getLogger("edgeloom")
 
@@ -268,7 +269,11 @@ def build_parser() -> argparse.ArgumentParser:
     discover.add_argument("--local-dir", type=Path, help="Local directory containing drivers")
     discover.add_argument("--output", type=Path, default=Path("discovery/catalog.json"))
     discover.add_argument("--format", choices=["json", "yaml"], default="json")
-    discover.add_argument("--limit", type=int, help="Stop after this many drivers")
+    discover.add_argument(
+        "--limit",
+        type=non_negative_int,
+        help="Stop after this many drivers (0 processes none; omit for no limit)",
+    )
     discover.add_argument("--timeout", type=float, default=15.0)
     discover.add_argument(
         "--cap-config",

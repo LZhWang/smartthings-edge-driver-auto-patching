@@ -153,7 +153,7 @@ def test_discover_from_github_skips_missing_driver_before_counting_limit(
     ]
 
 
-def test_discover_from_github_zero_limit_processes_all_drivers(
+def test_discover_from_github_zero_limit_processes_nothing(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     api_url = "https://api.github.com/repos/acme/drivers/contents/drivers"
@@ -168,11 +168,31 @@ def test_discover_from_github_zero_limit_processes_all_drivers(
     }
     calls = _install_fake_get(monkeypatch, routes)
 
-    # The production guard is deliberately falsy for 0, so zero currently means no limit.
     result = discover_drivers.discover_from_github("acme/drivers", "main", "drivers", None, 0, 3)
 
+    assert result == []
+    # An explicit zero must not cost a single driver fetch, only the listing.
+    assert [url for url, _ in calls] == [api_url]
+
+
+def test_discover_from_github_unlimited_when_limit_is_omitted(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    api_url = "https://api.github.com/repos/acme/drivers/contents/drivers"
+    raw_root = "https://raw.githubusercontent.com/acme/drivers/main/drivers"
+    routes = {
+        api_url: FakeResponse(
+            200,
+            payload=[{"name": name, "type": "dir"} for name in ["alpha", "beta"]],
+        ),
+        f"{raw_root}/alpha/fingerprints.yml": FakeResponse(200, text=_fingerprint_document("A1")),
+        f"{raw_root}/beta/fingerprints.yml": FakeResponse(200, text=_fingerprint_document("B2")),
+    }
+    _install_fake_get(monkeypatch, routes)
+
+    result = discover_drivers.discover_from_github("acme/drivers", "main", "drivers", None, None, 3)
+
     assert [item.driver for item in result] == ["alpha", "beta"]
-    assert len(calls) == 3
 
 
 def test_discover_from_github_limit_counts_drivers_with_fingerprints(

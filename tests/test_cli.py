@@ -177,3 +177,17 @@ def test_discover_says_so_when_the_capability_cross_check_is_skipped(
     catalog = json.loads((tmp_path / "c.json").read_text())
     assert catalog["capability_cross_check"] == "skipped"
     assert catalog["unsupported_drivers"] == []
+
+
+def test_discover_rejects_a_negative_limit(capsys: pytest.CaptureFixture[str]) -> None:
+    with pytest.raises(SystemExit) as exc:
+        main(["discover", "--limit", "-1"])
+    assert exc.value.code == 2
+    assert "--limit" in capsys.readouterr().err
+
+
+def test_discover_accepts_zero_as_a_real_limit() -> None:
+    from edgeloom.cli import build_parser
+
+    assert build_parser().parse_args(["discover", "--limit", "0"]).limit == 0
+    assert build_parser().parse_args(["discover"]).limit is None

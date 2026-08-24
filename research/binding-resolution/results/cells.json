@@ -1,0 +1,2881 @@
+[
+ {
+  "device": "012501",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "012501",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "012501",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "012501",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "012501",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "012501",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "012501",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "012501",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "012501",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "910",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "910",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Autolock"
+  ]
+ },
+ {
+  "device": "910",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Buzzer"
+  ]
+ },
+ {
+  "device": "910",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "910",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "910",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Lock Status LED"
+  ]
+ },
+ {
+  "device": "910",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "910",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "910",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "912",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "912",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Autolock"
+  ]
+ },
+ {
+  "device": "912",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Buzzer"
+  ]
+ },
+ {
+  "device": "912",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "912",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "912",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Lock Status LED"
+  ]
+ },
+ {
+  "device": "912",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "912",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "912",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Autolock"
+  ]
+ },
+ {
+  "device": "914",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Buzzer"
+  ]
+ },
+ {
+  "device": "914",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Lock Status LED"
+  ]
+ },
+ {
+  "device": "914",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914C",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914C",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Autolock"
+  ]
+ },
+ {
+  "device": "914C",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Buzzer"
+  ]
+ },
+ {
+  "device": "914C",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914C",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914C",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Lock Status LED"
+  ]
+ },
+ {
+  "device": "914C",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914C",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "914C",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "916",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "916",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Autolock"
+  ]
+ },
+ {
+  "device": "916",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Buzzer"
+  ]
+ },
+ {
+  "device": "916",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "916",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "916",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Lock Status LED"
+  ]
+ },
+ {
+  "device": "916",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "916",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "916",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "ASL-03",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "ASL-03",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "ASL-03",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "ASL-03",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "ASL-03",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "ASL-03",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "ASL-03",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "ASL-03",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "ASL-03",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE468",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE468",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock & Leave",
+   "Auto Lock"
+  ]
+ },
+ {
+  "device": "BE468",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Beeper",
+  "param": "3"
+ },
+ {
+  "device": "BE468",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Vacation Mode"
+  ]
+ },
+ {
+  "device": "BE468",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock & Leave"
+  ]
+ },
+ {
+  "device": "BE468",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE468",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE468",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE468",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE468ZP",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE468ZP",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock and Leave Mode",
+   "Auto Lock"
+  ]
+ },
+ {
+  "device": "BE468ZP",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Beeper",
+  "param": "3"
+ },
+ {
+  "device": "BE468ZP",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Vacation Mode"
+  ]
+ },
+ {
+  "device": "BE468ZP",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock and Leave Mode"
+  ]
+ },
+ {
+  "device": "BE468ZP",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE468ZP",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE468ZP",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE468ZP",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE469",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE469",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock & Leave",
+   "Auto Lock"
+  ]
+ },
+ {
+  "device": "BE469",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Beeper",
+  "param": "3"
+ },
+ {
+  "device": "BE469",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Vacation Mode"
+  ]
+ },
+ {
+  "device": "BE469",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock & Leave"
+  ]
+ },
+ {
+  "device": "BE469",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE469",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE469",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE469",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE469ZP",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE469ZP",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock and Leave Mode",
+   "Auto Lock"
+  ]
+ },
+ {
+  "device": "BE469ZP",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Beeper",
+  "param": "3"
+ },
+ {
+  "device": "BE469ZP",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Vacation Mode"
+  ]
+ },
+ {
+  "device": "BE469ZP",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock and Leave Mode"
+  ]
+ },
+ {
+  "device": "BE469ZP",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE469ZP",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE469ZP",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BE469ZP",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BTZW125",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BTZW125",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BTZW125",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BTZW125",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BTZW125",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BTZW125",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BTZW125",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BTZW125",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "BTZW125",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "CKPD FE599",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "CKPD FE599",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock & Leave"
+  ]
+ },
+ {
+  "device": "CKPD FE599",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Beeper",
+  "param": "3"
+ },
+ {
+  "device": "CKPD FE599",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Vacation Mode"
+  ]
+ },
+ {
+  "device": "CKPD FE599",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock & Leave"
+  ]
+ },
+ {
+  "device": "CKPD FE599",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "CKPD FE599",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "CKPD FE599",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "CKPD FE599",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DB2",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DB2",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DB2",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DB2",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DB2",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DB2",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DB2",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DB2",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DB2",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DDL240X-15HZW",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DDL240X-15HZW",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DDL240X-15HZW",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DDL240X-15HZW",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DDL240X-15HZW",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DDL240X-15HZW",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DDL240X-15HZW",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DDL240X-15HZW",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "DDL240X-15HZW",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Danalock V3-BTZE",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Danalock V3-BTZE",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Auto Lock"
+  ]
+ },
+ {
+  "device": "Danalock V3-BTZE",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Danalock V3-BTZE",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Danalock V3-BTZE",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Danalock V3-BTZE",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Danalock V3-BTZE",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Danalock V3-BTZE",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Danalock V3-BTZE",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-1000Z",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-1000Z",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-1000Z",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-1000Z",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-1000Z",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-1000Z",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-1000Z",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-1000Z",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-1000Z",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-2000",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-2000",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-2000",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-2000",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-2000",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-2000",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-2000",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-2000",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "GKW-2000",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "JBE109",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "JBE109",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock & Leave",
+   "Auto Lock"
+  ]
+ },
+ {
+  "device": "JBE109",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Beeper",
+  "param": "3"
+ },
+ {
+  "device": "JBE109",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Vacation Mode"
+  ]
+ },
+ {
+  "device": "JBE109",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock & Leave"
+  ]
+ },
+ {
+  "device": "JBE109",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "JBE109",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "JBE109",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "JBE109",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "JFE109",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "JFE109",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Auto Lock",
+   "Lock & Leave"
+  ]
+ },
+ {
+  "device": "JFE109",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Beeper",
+  "param": "3"
+ },
+ {
+  "device": "JFE109",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Vacation Mode"
+  ]
+ },
+ {
+  "device": "JFE109",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Lock & Leave"
+  ]
+ },
+ {
+  "device": "JFE109",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "JFE109",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "JFE109",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "JFE109",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Obsidian 954",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Obsidian 954",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Autolock"
+  ]
+ },
+ {
+  "device": "Obsidian 954",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Buzzer"
+  ]
+ },
+ {
+  "device": "Obsidian 954",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Obsidian 954",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Obsidian 954",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Dipswitch setting: Lock Status LED"
+  ]
+ },
+ {
+  "device": "Obsidian 954",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Obsidian 954",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "Obsidian 954",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "P-KFCON-MOD-YALE",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "P-KFCON-MOD-YALE",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": [
+   "Auto Relock"
+  ]
+ },
+ {
+  "device": "P-KFCON-MOD-YALE",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "P-KFCON-MOD-YALE",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "P-KFCON-MOD-YALE",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "P-KFCON-MOD-YALE",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "P-KFCON-MOD-YALE",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "P-KFCON-MOD-YALE",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "P-KFCON-MOD-YALE",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "PDS-100",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "PDS-100",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "PDS-100",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "PDS-100",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "PDS-100",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "PDS-100",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "PDS-100",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "PDS-100",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "PDS-100",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SD-L1000-CH",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SD-L1000-CH",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 60 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "SD-L1000-CH",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "SD-L1000-CH",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SD-L1000-CH",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SD-L1000-CH",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SD-L1000-CH",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SD-L1000-CH",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SD-L1000-CH",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SmartCode 888",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SmartCode 888",
+  "term": "AutoRelockTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SmartCode 888",
+  "term": "SoundVolume",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SmartCode 888",
+  "term": "OperatingMode",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SmartCode 888",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SmartCode 888",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SmartCode 888",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SmartCode 888",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "SmartCode 888",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD110",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD110",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD110",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD110",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD110",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD110",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD110",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD110",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD110",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD120",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD120",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD120",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD120",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD120",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD120",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD120",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD120",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD120",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD156",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD156",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD156",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD156",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD156",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD156",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD156",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD156",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD156",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD210",
+  "term": "Language",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Language",
+  "param": "5"
+ },
+ {
+  "device": "YRD210",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD210",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD210",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD210",
+  "term": "EnableOneTouchLocking",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD210",
+  "term": "EnableInsideStatusLED",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD210",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD210",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD210",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD216 / YRC216",
+  "term": "Language",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Language",
+  "param": "5"
+ },
+ {
+  "device": "YRD216 / YRC216",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD216 / YRC216",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD216 / YRC216",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD216 / YRC216",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD216 / YRC216",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD216 / YRC216",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD216 / YRC216",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD216 / YRC216",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD220 / YRD240",
+  "term": "Language",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Language",
+  "param": "5"
+ },
+ {
+  "device": "YRD220 / YRD240",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD220 / YRD240",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD220 / YRD240",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD220 / YRD240",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD220 / YRD240",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD220 / YRD240",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD220 / YRD240",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD220 / YRD240",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD226 / YRC226 / YRC246 / YRD256 / YRC256 / YRD446",
+  "term": "Language",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Language",
+  "param": "5"
+ },
+ {
+  "device": "YRD226 / YRC226 / YRC246 / YRD256 / YRC256 / YRD446",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD226 / YRC226 / YRC246 / YRD256 / YRC256 / YRD446",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD226 / YRC226 / YRC246 / YRD256 / YRC256 / YRD446",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD226 / YRC226 / YRC246 / YRD256 / YRC256 / YRD446",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD226 / YRC226 / YRC246 / YRD256 / YRC256 / YRD446",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD226 / YRC226 / YRC246 / YRD256 / YRC256 / YRD446",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD226 / YRC226 / YRC246 / YRD256 / YRC256 / YRD446",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD226 / YRC226 / YRC246 / YRD256 / YRC256 / YRD446",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD410-ZW2",
+  "term": "Language",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Language",
+  "param": "5"
+ },
+ {
+  "device": "YRD410-ZW2",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD410-ZW2",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD410-ZW2",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD410-ZW2",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD410-ZW2",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD410-ZW2",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD410-ZW2",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD410-ZW2",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD410-ZW3",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD410-ZW3",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD410-ZW3",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD410-ZW3",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD410-ZW3",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD410-ZW3",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD410-ZW3",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD410-ZW3",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD410-ZW3",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD420-ZW2",
+  "term": "Language",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Language",
+  "param": "5"
+ },
+ {
+  "device": "YRD420-ZW2",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD420-ZW2",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD420-ZW2",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD420-ZW2",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD420-ZW2",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD420-ZW2",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD420-ZW2",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD420-ZW2",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD420-ZW3",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD420-ZW3",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD420-ZW3",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD420-ZW3",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD420-ZW3",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD420-ZW3",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD420-ZW3",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD420-ZW3",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD420-ZW3",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD426-ZW2",
+  "term": "Language",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Language",
+  "param": "5"
+ },
+ {
+  "device": "YRD426-ZW2",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD426-ZW2",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD426-ZW2",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD426-ZW2",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD426-ZW2",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD426-ZW2",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD426-ZW2",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD426-ZW2",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD430-ZW2",
+  "term": "Language",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Language",
+  "param": "5"
+ },
+ {
+  "device": "YRD430-ZW2",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD430-ZW2",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD430-ZW2",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD430-ZW2",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD430-ZW2",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD430-ZW2",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD430-ZW2",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD430-ZW2",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD430-ZW3",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD430-ZW3",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD430-ZW3",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD430-ZW3",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD430-ZW3",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD430-ZW3",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD430-ZW3",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD430-ZW3",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD430-ZW3",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRD450-ZW3",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRD450-ZW3",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRD450-ZW3",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRD450-ZW3",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRD450-ZW3",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD450-ZW3",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD450-ZW3",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRD450-ZW3",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRD450-ZW3",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRL210 / YRL220",
+  "term": "Language",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Language",
+  "param": "5"
+ },
+ {
+  "device": "YRL210 / YRL220",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRL210 / YRL220",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRL210 / YRL220",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRL210 / YRL220",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRL210 / YRL220",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRL210 / YRL220",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Privacy Button",
+  "param": "12",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRL210 / YRL220",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRL210 / YRL220",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRL216 / YRL236",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRL216 / YRL236",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRL216 / YRL236",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRL216 / YRL236",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRL216 / YRL236",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRL216 / YRL236",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRL216 / YRL236",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRL216 / YRL236",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRL216 / YRL236",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "YRL226 / YRL256",
+  "term": "Language",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Language",
+  "param": "5"
+ },
+ {
+  "device": "YRL226 / YRL256",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "YRL226 / YRL256",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "YRL226 / YRL256",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "YRL226 / YRL256",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRL226 / YRL256",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "YRL226 / YRL256",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "YRL226 / YRL256",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "YRL226 / YRL256",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ },
+ {
+  "device": "yrd4x0-f-zw3",
+  "term": "Language",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "yrd4x0-f-zw3",
+  "term": "AutoRelockTime",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Auto Relock Time",
+  "param": "3",
+  "related_present": [
+   "Auto Relock"
+  ],
+  "losses": [
+   "range capped at 180 vs ZCL uint32"
+  ]
+ },
+ {
+  "device": "yrd4x0-f-zw3",
+  "term": "SoundVolume",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Volume",
+  "param": "1"
+ },
+ {
+  "device": "yrd4x0-f-zw3",
+  "term": "OperatingMode",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Operating Mode",
+  "param": "8"
+ },
+ {
+  "device": "yrd4x0-f-zw3",
+  "term": "EnableOneTouchLocking",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "One Touch Locking",
+  "param": "11",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "yrd4x0-f-zw3",
+  "term": "EnableInsideStatusLED",
+  "verdict": "RESOLVED-LOSSY",
+  "binding": "Lock Status LED",
+  "param": "13",
+  "losses": [
+   "boolean encoded as [0, 255], not 0/1"
+  ]
+ },
+ {
+  "device": "yrd4x0-f-zw3",
+  "term": "EnablePrivacyModeButton",
+  "verdict": "UNBOUND",
+  "related_present": []
+ },
+ {
+  "device": "yrd4x0-f-zw3",
+  "term": "WrongCodeEntryLimit",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Limit",
+  "param": "4"
+ },
+ {
+  "device": "yrd4x0-f-zw3",
+  "term": "UserCodeTemporaryDisableTime",
+  "verdict": "RESOLVED-1:1",
+  "binding": "Wrong Code Lockout Time",
+  "param": "7"
+ }
+]

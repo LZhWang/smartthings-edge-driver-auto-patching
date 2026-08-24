@@ -1,0 +1,6 @@
+# Fetched corpora, never vendored. See fetch_data.py.
+# Dot-prefixed so `edgeloom validate .` does not walk into third-party JSON5.
+.data/
+
+# 926K intermediate; regenerate with build_index.py.
+results/zwave_index.json

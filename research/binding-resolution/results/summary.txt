@@ -1,0 +1,32 @@
+44 Z-Wave lock products x 9 terms = 396 cells
+
+OVERALL
+  RESOLVED-1:1      95   24.0%
+  RESOLVED-LOSSY    65   16.4%
+  AMBIGUOUS-1:N      0    0.0%
+  UNBOUND          236   59.6%
+
+PER TERM
+  term                             1:1  lossy  ambig  unbound
+  Language                          10      0      0       34
+  AutoRelockTime                     0     20      0       24
+  SoundVolume                       28      0      0       16
+  OperatingMode                     19      0      0       25
+  EnableOneTouchLocking              0     16      0       28
+  EnableInsideStatusLED              0     16      0       28
+  EnablePrivacyModeButton            0     13      0       31
+  WrongCodeEntryLimit               19      0      0       25
+  UserCodeTemporaryDisableTime      19      0      0       25
+
+DECISION RULE (over the 160 cells where a binding exists)
+  RESOLVED-1:1  = 59.4%
+  AMBIGUOUS-1:N = 0.0%
+  (matrix coverage over all 396 cells: 24.0% 1:1, 59.6% the device lacks the feature)
+  -> BUILD A LEXICON PLUS INDEX. Concepts port; encodings do not.
+
+CONTROL: naive keyword matching vs the curated lexicon
+  naive   ambiguous:  100 of 228 bound cells (43.9%)
+  curated ambiguous:    0 of 160 bound cells (0.0%)
+  The gap is the work the lexicon does. It is not a wrapper.
+
+wrote results/cells.json (396 cells)

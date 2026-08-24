@@ -9,6 +9,11 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
+- `discover --limit N` now counts drivers that actually yield fingerprints.
+  A `fingerprints.yml` without a `zigbeeManufacturer` key (e.g. Matter
+  drivers) no longer consumes the limit, which made small limits return
+  nothing even though Zigbee drivers followed.
+
 - `edgeloom validate` now reports profiles and capability maps that omit their
   required `name` or `version` key instead of silently skipping them.
 

@@ -106,7 +106,14 @@ def discover_from_github(
         data = fetch_remote_yaml(repo, branch, fp_path, timeout)
         if not data:
             continue
-        fingerprints.extend(parse_fingerprints(driver_name, data))
+        driver_fps = parse_fingerprints(driver_name, data)
+        if not driver_fps:
+            # The limit counts drivers that actually yield fingerprints: a
+            # Matter-shaped fingerprints.yml (no zigbeeManufacturer key)
+            # contributes nothing, and counting it against the limit makes a
+            # small --limit return nothing even though Zigbee drivers follow.
+            continue
+        fingerprints.extend(driver_fps)
         processed += 1
     return fingerprints
 
@@ -123,7 +130,12 @@ def discover_from_local(base_dir: Path, subpath: str, limit: int | None) -> list
             if not fp_file.exists():
                 continue
             data = load_yaml(fp_file)
-            fingerprints.extend(parse_fingerprints(driver_dir.name, data))
+            driver_fps = parse_fingerprints(driver_dir.name, data)
+            if not driver_fps:
+                # Same accounting as discover_from_github: only drivers that
+                # yield fingerprints count against the limit.
+                continue
+            fingerprints.extend(driver_fps)
             processed += 1
             if limit and processed >= limit:
                 break

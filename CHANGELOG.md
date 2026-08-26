@@ -7,6 +7,12 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added
+
+- Public governance, maintainer, support, and code-ownership documents now
+  define decision records, contribution roles, support channels, and review
+  responsibility.
+
 ### Security
 
 - **Bounded documents parsed from untrusted sources.** `yaml.safe_load` stores
@@ -22,6 +28,10 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
+- Contribution and pull-request guidance now asks for explicit compatibility,
+  security-boundary, documentation, and test evidence.
+- The Code of Conduct now names a working private reporting address instead of
+  a placeholder.
 - `SECURITY.md` now states what EdgeLoom trusts. The absence of that section is
   what made GHSA-4f7m-wgh7-46xf possible to misjudge: a driver's own files are
   attacker-controlled on the primary path, and the document did not say so.

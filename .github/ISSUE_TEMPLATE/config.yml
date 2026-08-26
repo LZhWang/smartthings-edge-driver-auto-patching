@@ -6,3 +6,6 @@ contact_links:
   - name: Ask a question
     url: https://github.com/edgeloom-oss/edgeloom/discussions
     about: For usage questions and general discussion.
+  - name: Support guide
+    url: https://github.com/edgeloom-oss/edgeloom/blob/main/SUPPORT.md
+    about: Choose the right public or private channel and see response expectations.

@@ -157,7 +157,7 @@ container workflow.
 Please report vulnerabilities privately. See [SECURITY.md](SECURITY.md).
 
 Patching a driver changes what a device exposes on your own hub. EdgeLoom is
-research tooling: review a diff before installing anything on a hub you depend
+pre-1.0 software: review a diff before installing anything on a hub you depend
 on, and keep the backup it creates.
 
 ## How to Cite
@@ -181,6 +181,11 @@ Bug reports, device reports, and pull requests are welcome. Start with
 [CONTRIBUTING.md](CONTRIBUTING.md) and the
 [Code of Conduct](CODE_OF_CONDUCT.md). Changes are recorded in
 [CHANGELOG.md](CHANGELOG.md).
+
+Questions and design ideas belong in [GitHub Discussions](https://github.com/edgeloom-oss/edgeloom/discussions);
+[SUPPORT.md](SUPPORT.md) routes bugs, device results, and private security
+reports. Project decisions and responsibility are documented in
+[GOVERNANCE.md](GOVERNANCE.md) and [MAINTAINERS.md](MAINTAINERS.md).
 
 ## License
 

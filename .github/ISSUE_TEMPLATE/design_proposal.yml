@@ -1,0 +1,67 @@
+name: Design or governance proposal
+description: Propose a substantial technical, ecosystem, or governance change
+title: "[Proposal] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form before implementing a change to a public CLI or schema,
+        compatibility, a trust boundary, a supported platform, a major
+        dependency, or project governance. See GOVERNANCE.md for the process.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: User or ecosystem problem
+      description: Who is affected, and what evidence shows the problem?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the outcome and the project areas it would change.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Include keeping the current behavior when that is a real option.
+    validations:
+      required: true
+
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and migration
+      description: Note CLI, schema, automation, driver, or deployment effects.
+    validations:
+      required: true
+
+  - type: textarea
+    id: security
+    attributes:
+      label: Security and privacy
+      description: Note effects on credentials, untrusted inputs, generated code, filesystem writes, and remote services. Do not disclose an unpatched vulnerability here.
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation plan
+      description: What tests, device reports, or measurable evidence would show success?
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: conduct
+    attributes:
+      label: Participation
+      options:
+        - label: I agree to follow the Code of Conduct while discussing this proposal.
+          required: true

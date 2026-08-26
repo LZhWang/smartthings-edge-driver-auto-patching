@@ -240,11 +240,7 @@ def test_patch_then_restore_an_external_driver(driver_copy: Path) -> None:
     """The public patch and restore commands share one sibling-backup contract."""
 
     def tree_contents(root: Path) -> dict[str, bytes]:
-        return {
-            str(path.relative_to(root)): path.read_bytes()
-            for path in root.rglob("*")
-            if path.is_file()
-        }
+        return {str(path.relative_to(root)): path.read_bytes() for path in root.rglob("*") if path.is_file()}
 
     stock = tree_contents(driver_copy)
 

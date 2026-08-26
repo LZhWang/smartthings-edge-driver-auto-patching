@@ -1,0 +1,12 @@
+# The current repository-wide maintainer. More specific ownership can be added
+# as reviewers and maintainers are appointed through GOVERNANCE.md.
+* @infinitywings
+
+# Changes to project policy, automation, releases, and public contracts always
+# require explicit maintainer review.
+/.github/ @infinitywings
+/GOVERNANCE.md @infinitywings
+/MAINTAINERS.md @infinitywings
+/SECURITY.md @infinitywings
+/pyproject.toml @infinitywings
+/schema/ @infinitywings

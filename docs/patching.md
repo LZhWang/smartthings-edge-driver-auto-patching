@@ -94,13 +94,12 @@ the Python CLI, while the shell command uses `zigbee-lock`.
 
 ## Restoring to Stock Drivers
 
-Every non-dry-run patch preserves the original driver under
-`auto_patch/<driver>-backup` (for example `zigbee-lock-backup`). Undo a patch
-and bring the stock driver back with the CLI:
+Every non-dry-run patch preserves the original driver in a sibling directory
+named `<driver>-backup` (for example `zigbee-lock-backup`). Undo a patch and
+bring the stock driver back with the CLI:
 
 ```bash
-# From the repository root:
-edgeloom restore auto_patch/zigbee-lock
+edgeloom restore /path/to/zigbee-lock
 ```
 
 `DRIVER` is a path to the driver directory, resolved relative to the current

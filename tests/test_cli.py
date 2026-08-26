@@ -193,21 +193,13 @@ def test_discover_accepts_zero_as_a_real_limit() -> None:
     assert build_parser().parse_args(["discover"]).limit is None
 
 
-def test_restore_missing_driver_exits_nonzero(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_restore_missing_driver_exits_nonzero(tmp_path: Path) -> None:
     """A driver with no backup must be a clean error, not a traceback."""
-    from auto_patch import restore_from_backup
-
-    tmp_root = tmp_path / "auto_patch"
-    tmp_root.mkdir()
-    monkeypatch.setattr(restore_from_backup, "SCRIPT_ROOT", tmp_root)
-
-    assert main(["restore", str(tmp_root / "zigbee-lock")]) == 1
+    assert main(["restore", str(tmp_path / "external" / "zigbee-lock")]) == 1
 
 
-def test_restore_dry_run_moves_nothing(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    from auto_patch import restore_from_backup
-
-    tmp_root = tmp_path / "auto_patch"
+def test_restore_dry_run_moves_nothing(tmp_path: Path) -> None:
+    tmp_root = tmp_path / "external"
     tmp_root.mkdir()
     active = tmp_root / "zigbee-lock"
     backup = tmp_root / "zigbee-lock-backup"
@@ -215,8 +207,6 @@ def test_restore_dry_run_moves_nothing(tmp_path: Path, monkeypatch: pytest.Monke
     backup.mkdir()
     (active / "fingerprints.yml").write_text("patched\n", encoding="utf-8")
     (backup / "fingerprints.yml").write_text("original\n", encoding="utf-8")
-
-    monkeypatch.setattr(restore_from_backup, "SCRIPT_ROOT", tmp_root)
 
     assert main(["restore", str(active), "--dry-run"]) == 0
 
@@ -226,12 +216,9 @@ def test_restore_dry_run_moves_nothing(tmp_path: Path, monkeypatch: pytest.Monke
     assert not patched_dirs
 
 
-def test_restore_restores_the_backup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    """End to end through the CLI: the backup comes back and the patched
-    tree is parked under a timestamped name, not deleted."""
-    from auto_patch import restore_from_backup
-
-    tmp_root = tmp_path / "auto_patch"
+def test_restore_restores_an_external_driver(tmp_path: Path) -> None:
+    """The CLI restores a driver outside the installed package tree."""
+    tmp_root = tmp_path / "external"
     tmp_root.mkdir()
     active = tmp_root / "zigbee-lock"
     backup = tmp_root / "zigbee-lock-backup"
@@ -240,8 +227,6 @@ def test_restore_restores_the_backup(tmp_path: Path, monkeypatch: pytest.MonkeyP
     (active / "fingerprints.yml").write_text("patched\n", encoding="utf-8")
     (backup / "fingerprints.yml").write_text("original\n", encoding="utf-8")
 
-    monkeypatch.setattr(restore_from_backup, "SCRIPT_ROOT", tmp_root)
-
     assert main(["restore", str(active)]) == 0
 
     assert (active / "fingerprints.yml").read_text(encoding="utf-8") == "original\n"
@@ -249,3 +234,27 @@ def test_restore_restores_the_backup(tmp_path: Path, monkeypatch: pytest.MonkeyP
     patched_dirs = [p for p in tmp_root.iterdir() if p.name.startswith("zigbee-lock-patched-")]
     assert len(patched_dirs) == 1
     assert (patched_dirs[0] / "fingerprints.yml").read_text(encoding="utf-8") == "patched\n"
+
+
+def test_patch_then_restore_an_external_driver(driver_copy: Path) -> None:
+    """The public patch and restore commands share one sibling-backup contract."""
+
+    def tree_contents(root: Path) -> dict[str, bytes]:
+        return {
+            str(path.relative_to(root)): path.read_bytes()
+            for path in root.rglob("*")
+            if path.is_file()
+        }
+
+    stock = tree_contents(driver_copy)
+
+    assert main(["patch", str(driver_copy), "YRD226 TSDB", "Yale"]) == 0
+    assert driver_copy.with_name(f"{driver_copy.name}-backup").is_dir()
+    assert (driver_copy / "profiles" / "base-lock-patch.yml").is_file()
+
+    assert main(["restore", str(driver_copy)]) == 0
+    assert tree_contents(driver_copy) == stock
+
+    patched_dirs = list(driver_copy.parent.glob(f"{driver_copy.name}-patched-*"))
+    assert len(patched_dirs) == 1
+    assert (patched_dirs[0] / "profiles" / "base-lock-patch.yml").is_file()

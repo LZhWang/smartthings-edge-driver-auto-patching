@@ -53,32 +53,20 @@ def _cmd_patch(args: argparse.Namespace) -> int:
 
 
 def _cmd_restore(args: argparse.Namespace) -> int:
-    from auto_patch.restore_from_backup import SCRIPT_ROOT, restore_driver
+    from auto_patch.restore_from_backup import restore_driver
 
-    # `restore_driver` resolves the driver name against the auto_patch
-    # directory, so accept a path like `edgeloom patch` and turn it back into
-    # the name restore_from_backup expects.
     driver_dir = Path(args.driver).resolve()
-    try:
-        driver_name = driver_dir.relative_to(SCRIPT_ROOT)
-    except ValueError:
-        LOGGER.error(
-            "Driver '%s' is not inside the auto_patch directory (%s).",
-            args.driver,
-            SCRIPT_ROOT,
-        )
-        return 1
 
     try:
-        patched_dir = restore_driver(str(driver_name), dry_run=args.dry_run)
+        patched_dir = restore_driver(driver_dir, dry_run=args.dry_run)
     except FileNotFoundError as exc:
         LOGGER.error("%s", exc)
         return 1
 
     if args.dry_run:
-        print(f"Dry run complete for {driver_name}; nothing was written.")
+        print(f"Dry run complete for {driver_dir.name}; nothing was written.")
     else:
-        print(f"Restored {driver_name} from its backup.")
+        print(f"Restored {driver_dir.name} from its backup.")
         if patched_dir is not None:
             print(f"Patched tree preserved at {patched_dir}")
     return 0
